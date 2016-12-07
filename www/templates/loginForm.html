@@ -1,0 +1,45 @@
+<ion-view>
+    <form method="post" name="loginForm" novalidate>
+        <ion-header-bar align-title="center" class="bar bar-header bar-light">
+            <h1 class="title"> Login </h1>
+        </ion-header-bar>
+
+        <ion-content>
+
+            <div ng-show="errors.non_field_errors" class="alert alert-danger">
+                {{ errors.non_field_errors[0] }}
+            </div>
+
+            <div class="list">
+                <label class="item item-input">
+                    <input placeholder="Username" type="text" name="username"
+                           ng-model="user.username" required>
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="loginForm.submitted && loginForm.password.$error"
+                     ng-messages="loginForm.username.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+                <label class="item item-input">
+                    <input placeholder="Password" type="password" name="password"
+                           ng-model="user.password" required minlength="6">
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="loginForm.submitted && loginForm.password.$error"
+                     ng-messages="loginForm.password.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+
+                <div class="padding">
+                    <button type="submit" ng-click="saveLoginForm(user)"
+                            class="button button-block button-positive activated">Login
+                    </button>
+                </div>
+            </div>
+        </ion-content>
+    </form>
+</ion-view>
