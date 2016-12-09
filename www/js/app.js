@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule'])
 
-    .run(function ($ionicPlatform) {
+    .run(function ($ionicPlatform, $rootScope, $location, $state, Account) {
         $ionicPlatform.ready(function () {
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -20,20 +20,37 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule'])
             if (window.StatusBar) {
                 StatusBar.styleDefault();
             }
+
+            $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
+            });
+
         });
     })
-    .config(function ($stateProvider, $urlRouterProvider, localStorageServiceProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $sceDelegateProvider, $httpProvider, localStorageServiceProvider) {
         localStorageServiceProvider
             .setPrefix('teamMusic');
 
         $stateProvider
-            .state('login', {
+            .state('no-logged', {
+                url: '/no-logged',
+                templateUrl: 'templates/no-logged/menu.html'
+            })
+            .state('no-logged.login', {
                 url: '/login',
-                templateUrl: 'templates/loginForm.html',
+                templateUrl: 'templates/no-logged/loginForm.html',
                 controller: 'loginFormController'
+            })
+            .state('no-logged.register', {
+                url: '/register',
+                templateUrl: 'templates/no-logged/registerForm.html',
+                controller: 'registerFormController'
             });
-        $urlRouterProvider.otherwise('/login');
+        $urlRouterProvider.otherwise('/no-logged/login');
+
+        $sceDelegateProvider.resourceUrlWhitelist([
+            'self',
+            'http://127.0.0.1:8000/**'
+        ]);
+        $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
     })
-    .controller("teamMusicCtrl", function ($scope) {
-    });

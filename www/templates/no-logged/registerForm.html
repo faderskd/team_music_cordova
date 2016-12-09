@@ -1,0 +1,88 @@
+<ion-view view-title="Register">
+    <form method="post" name="registerForm" novalidate>
+        <ion-content>
+            <div ng-show="errors.non_field_errors" class="error-container head-error-container">
+                <div class="error">
+                    <i class="ion-information-circled"></i>
+                    {{ errors.non_field_errors[0] }}
+                </div>
+            </div>
+
+            <div class="list">
+                <label class="item item-input">
+                    <input class="form-control" placeholder="Username" type="text" name="username"
+                           ng-model="newUser.username" required>
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="registerForm.submitted && registerForm.username.$error"
+                     ng-messages="registerForm.username.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+                <div class="error-container last-error-container" ng-show="errors.username">
+                    <div class="error">
+                        <i class="ion-information-circled"></i>
+                        {{ errors.username[0] }}
+                    </div>
+                </div>
+
+
+                <label class="item item-input">
+                    <input class="form-control" placeholder="Password" type="password" name="password"
+                           ng-model="newUser.password" required minlength="6">
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="registerForm.submitted && registerForm.password.$error"
+                     ng-messages="registerForm.password.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+                <div class="error-container last-error-container" ng-show="errors.password">
+                    <div class="error">
+                        <i class="ion-information-circled"></i>
+                        {{ errors.password[0] }}
+                    </div>
+                </div>
+
+
+                <label class="item item-input">
+                    <input class="form-control" placeholder="Password confirm" type="password" name="password2"
+                           password-check="newUser.password" ng-model="newUser.password2" required>
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="registerForm.submitted && registerForm.password2.$error"
+                     ng-messages="registerForm.password2.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+
+                <label class="item item-input">
+                    <input class="form-control" placeholder="Email" type="email" name="uEmail" ng-model="newUser.email"
+                           required>
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="registerForm.submitted && registerForm.uEmail.$error"
+                     ng-messages="registerForm.uEmail.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+                <div class="error-container last-error-container" ng-show="errors.email">
+                    <div class="error">
+                        <i class="ion-information-circled"></i>
+                        {{ errors.email[0]}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="padding">
+                <button type="submit" ng-click="saveRegisterForm(newUser)"
+                        class="button button-block button-positive activated">Register
+                </button>
+            </div>
+        </ion-content>
+    </form>
+</ion-view>
