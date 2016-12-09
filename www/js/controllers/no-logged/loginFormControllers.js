@@ -7,6 +7,7 @@ angular.module('teamMusic')
                 Account.login(ApiUrls.loginUrl, user)
                     .then(function successCallback(response) {
                         $scope.resetForm();
+                        $state.go('logged.settings');
                     }, function errorsCallback(response) {
                         $scope.errors = response.data;
                     });

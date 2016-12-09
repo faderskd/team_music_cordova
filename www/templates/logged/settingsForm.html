@@ -1,0 +1,86 @@
+<ion-view view-title="Settings">
+    <form method="post" name="settingsForm" novalidate>
+        <ion-content>
+            <div ng-show="error.non_field_errors" class="error-container head-error-container">
+                <div class="error">
+                    <i class="ion-information-circled">
+                        {{errors.non_field_errors[0]}}
+                    </i>
+                </div>
+            </div>
+
+            <div class="list">
+                <label class="item item-input">
+                    <input class="form-control" type="text"
+                           disabled ng-model="user.username">
+                </label>
+
+                <label class="item item-input">
+                    <input type="password" name="old_password" ng-model="user.old_password"
+                           check-all-passwords-filled password1="password1" password2="password2"
+                           placeholder="Old password">
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="settingsForm.submitted && settingsForm.old_password.$error"
+                     ng-messages="settingsForm.old_password.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+                <div class="error-container last-error-container" ng-show="errors.old_password">
+                    <div class="error">
+                        <i class="ion-information-circled"></i>
+                        {{ errors.old_password[0]}}
+                    </div>
+                </div>
+
+                <label class="item item-input">
+                    <input type="password" name="new_password1" ng-model="user.new_password1" minlength="6"
+                           placeholder="New password">
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="settingsForm.submitted && settingsForm.new_password1.$error"
+                     ng-messages="settingsForm.new_password1.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+                <label class="item item-input">
+                    <input type="password" name="new_password2" ng-model="user.new_password2"
+                           placeholder="Confirm password">
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="settingsForm.submitted && settingsForm.new_password2.$error"
+                     ng-messages="settingsForm.new_password2.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+                <label class="item item-input">
+                    <input type="text" name="email" ng-model="user.email" required
+                           placeholder="Email">
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="settingsForm.submitted && settingsForm.email.$error"
+                     ng-messages="settingsForm.email.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+                <div class="error-container last-error-container" ng-show="errors.email">
+                    <div class="error">
+                        <i class="ion-information-circled"></i>
+                        {{ errors.email[0] }}
+                    </div>
+                </div>
+
+                <div class="padding">
+                    <button type="submit" ng-click="saveSettingsForm(user)"
+                            class="button button-block button-positive activated">Save
+                    </button>
+                </div>
+
+            </div>
+        </ion-content>
+    </form>
+</ion-view>

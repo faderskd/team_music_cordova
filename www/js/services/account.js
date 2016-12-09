@@ -6,12 +6,9 @@ angular.module("teamMusic")
             loadUserFromCookie: function () {
                 var userData = localStorageService.get('userData');
 
-                if (userData.token && userData.id && userData.username) {
-                    user.token = userData.token;
-                    user.id = userData.id;
-                    user.username = userData.username;
-
-                    return user;
+                if (userData.token && userData.id && userData.username && userData.email) {
+                    user = userData;
+                    return userData;
                 }
                 account.clearStorage();
                 return null;

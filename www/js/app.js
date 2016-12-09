@@ -5,7 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule'])
 
-    .run(function ($ionicPlatform, $rootScope, $location, $state, Account) {
+    .run(function ($ionicPlatform, $rootScope, $state, Account) {
+
+        Account.loadUserFromCookie();
+
         $ionicPlatform.ready(function () {
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -22,6 +25,7 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule'])
             }
 
             $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
+
             });
 
         });
@@ -44,8 +48,18 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule'])
                 url: '/register',
                 templateUrl: 'templates/no-logged/registerForm.html',
                 controller: 'registerFormController'
+            })
+            .state('logged', {
+                url: '/logged',
+                templateUrl: 'templates/logged/menu.html'
+            })
+            .state('logged.settings', {
+                url: '/settings',
+                templateUrl: 'templates/logged/settingsForm.html',
+                controller: 'settingsFormController'
             });
-        $urlRouterProvider.otherwise('/no-logged/login');
+
+        $urlRouterProvider.otherwise('/logged/settings');
 
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
@@ -53,4 +67,4 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule'])
         ]);
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-    })
+    });
