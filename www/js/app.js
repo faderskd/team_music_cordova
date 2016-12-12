@@ -25,7 +25,6 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule'])
             }
 
             $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
-
             });
 
         });
@@ -37,26 +36,37 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule'])
         $stateProvider
             .state('no-logged', {
                 url: '/no-logged',
-                templateUrl: 'templates/no-logged/menu.html'
+                templateUrl: 'templates/no-logged/menu.html',
+                abstract: true
             })
             .state('no-logged.login', {
                 url: '/login',
                 templateUrl: 'templates/no-logged/loginForm.html',
-                controller: 'loginFormController'
+                controller: 'loginFormController',
+                cache: false
             })
             .state('no-logged.register', {
                 url: '/register',
                 templateUrl: 'templates/no-logged/registerForm.html',
-                controller: 'registerFormController'
+                controller: 'registerFormController',
+                cache: false
             })
             .state('logged', {
                 url: '/logged',
-                templateUrl: 'templates/logged/menu.html'
+                templateUrl: 'templates/logged/menu.html',
+                abstract: true
             })
             .state('logged.settings', {
                 url: '/settings',
                 templateUrl: 'templates/logged/settingsForm.html',
-                controller: 'settingsFormController'
+                controller: 'settingsFormController',
+                cache: false
+            })
+            .state('logged.track-list', {
+                url: '/track-list',
+                templateUrl: 'templates/logged/trackList.html',
+                controller: 'trackListController',
+                cache: false
             });
 
         $urlRouterProvider.otherwise('/no-logged/login');
@@ -66,5 +76,6 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule'])
             'http://127.0.0.1:8000/**'
         ]);
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
+        $httpProvider.interceptors.push("authorizationInterceptor");
+        $httpProvider.interceptors.push("unauthorizedInterceptor");
     });

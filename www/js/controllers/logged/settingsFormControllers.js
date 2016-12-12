@@ -1,5 +1,5 @@
 angular.module('teamMusic')
-    .controller('settingsFormController', function ($scope, Account) {
+    .controller('settingsFormController', function ($scope, $http, $state, ApiUrls, Account) {
         var currentUser = Account.getUser();
         $scope.user = {
             username: currentUser.username,
@@ -8,7 +8,21 @@ angular.module('teamMusic')
 
         $scope.saveSettingsForm = function (user) {
             if ($scope.settingsForm.$valid) {
-
+                $http({
+                    method: 'PUT',
+                    url: ApiUrls.usersUrl + Account.getUser().id + '/',
+                    data: user
+                }).then(
+                    function successCallback(response) {
+                        var currentUser = Account.get
+                        $state.go('logged.settings', {}, {reload: true});
+                    },
+                    function errorCallback(response) {
+                        if (response.status == 400) {
+                            $scope.errors = response.data;
+                        }
+                    }
+                );
             }
             $scope.settingsForm.submitted = true;
         }

@@ -1,0 +1,16 @@
+<ion-view view-title="Track list">
+
+    <ion-content>
+        <ion-list can-swipe="true">
+
+            <ion-item class="item item-thumbnail-left" ng-repeat="track in tracks">
+                <img ng-src="{{track.image_url}}">
+
+
+                <h2>{{track.title}}</h2>
+                <ion-option-button class="button-positive">Edit</ion-option-button>
+            </ion-item>
+
+        </ion-list>
+    </ion-content>
+</ion-view>

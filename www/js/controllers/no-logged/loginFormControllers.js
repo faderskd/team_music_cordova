@@ -6,18 +6,11 @@ angular.module('teamMusic')
             if ($scope.loginForm.$valid) {
                 Account.login(ApiUrls.loginUrl, user)
                     .then(function successCallback(response) {
-                        $scope.resetForm();
-                        $state.go('logged.settings');
+                        $state.go('logged.track-list');
                     }, function errorsCallback(response) {
                         $scope.errors = response.data;
                     });
             }
             $scope.loginForm.submitted = true;
         };
-
-        $scope.resetForm = function() {
-            $scope.loginForm.submitted = false;
-            $scope.user = {};
-            $scope.errors = {};
-        }
     });

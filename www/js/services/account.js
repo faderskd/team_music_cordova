@@ -6,7 +6,7 @@ angular.module("teamMusic")
             loadUserFromCookie: function () {
                 var userData = localStorageService.get('userData');
 
-                if (userData.token && userData.id && userData.username && userData.email) {
+                if (userData && userData.token && userData.id && userData.username && userData.email) {
                     user = userData;
                     return userData;
                 }
@@ -20,6 +20,10 @@ angular.module("teamMusic")
             // authorization
             getUser: function () {
                 return user;
+            },
+            setUser: function (newUser) {
+                user.email = newUser.email;
+                localStorageService.set('userData', user);
             },
             login: function (loginUrl, data) {
                 var deffered = $q.defer();

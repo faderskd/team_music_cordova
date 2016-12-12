@@ -27,13 +27,6 @@ angular.module('teamMusic')
             $scope.registerForm.submitted = true;
         };
 
-        $scope.resetForm = function() {
-            $scope.registerForm.submitted = false;
-            $scope.password2 = '';
-            $scope.newUser = {};
-            $scope.errors = {};
-        }
-
     }).directive('passwordCheck', function () {
         return {
             require: "ngModel",
