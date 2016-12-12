@@ -59,7 +59,7 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule'])
                 controller: 'settingsFormController'
             });
 
-        $urlRouterProvider.otherwise('/logged/settings');
+        $urlRouterProvider.otherwise('/no-logged/login');
 
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',

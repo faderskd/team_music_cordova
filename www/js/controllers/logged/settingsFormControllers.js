@@ -13,26 +13,24 @@ angular.module('teamMusic')
             $scope.settingsForm.submitted = true;
         }
     })
-    .directive('checkAllPasswordsFilled', function ($parse) {
+    .directive('checkAllPasswordsFilled', function () {
         return {
             require: 'ngModel',
+            restrict: 'A',
+            scope: {
+                password1: '=password1',
+                password2: '=password2'
+            },
             link: function link(scope, element, attrs, ngModel) {
-                var password1Expression = attrs.password1;
-                var password2Expression = attrs.password2;
 
-                var password1 = $parse(password1Expression);
-                var password2 = $parse(password2Expression);
-                password1.assign(scope);
-                password2.assign(scope);
-                ngModel.$validators.$required = function (modelValue, viewValue) {
-                    console.log(password1);
-                    return (password1 || password2) && !modelValue;
+                ngModel.$validators.required = function (modelValue, viewValue) {
+                    return !((scope.password1 || scope.password2) && !modelValue);
                 };
 
-                scope.$watch(password1Expression, function () {
+                scope.$watch('password1', function () {
                     ngModel.$validate();
                 });
-                scope.$watch(password2Expression, function () {
+                scope.$watch('password2', function () {
                     ngModel.$validate();
                 });
             }

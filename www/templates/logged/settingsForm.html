@@ -17,7 +17,7 @@
 
                 <label class="item item-input">
                     <input type="password" name="old_password" ng-model="user.old_password"
-                           check-all-passwords-filled password1="password1" password2="password2"
+                           check-all-passwords-filled password1="user.new_password1" password2="user.new_password2"
                            placeholder="Old password">
                 </label>
 
@@ -36,7 +36,8 @@
 
                 <label class="item item-input">
                     <input type="password" name="new_password1" ng-model="user.new_password1" minlength="6"
-                           placeholder="New password">
+                           placeholder="New password" check-all-passwords-filled
+                           password1="user.old_password" password2="user.new_password2">
                 </label>
 
                 <div class="error-container last-error-container"
@@ -47,7 +48,8 @@
 
                 <label class="item item-input">
                     <input type="password" name="new_password2" ng-model="user.new_password2"
-                           placeholder="Confirm password">
+                           placeholder="Confirm password" check-all-passwords-filled
+                           password1="user.old_password" password2="user.new_password1">
                 </label>
 
                 <div class="error-container last-error-container"
