@@ -14,6 +14,7 @@ angular.module("teamMusic")
         $scope.idOfTrackAssignedToDelete = -1;
         $scope.nameOfTrackAssignedToDelete = '';
         $scope.showDeleteTrackModal = true;
+        $scope.showDelete = false;
 
         // deleting tracks functions
         $scope.assignTrackToDelete = function (track) {
@@ -21,8 +22,8 @@ angular.module("teamMusic")
             $scope.nameOfTrackAssignedToDelete = track.title;
             $scope.showDeleteTrackModal = true;
         };
-        $scope.deleteAssignedTrack = function (tracks) {
-            if ($scope.idOfTrackAssignedToDelete > 0 && angular.isArray(tracks)) {
+        $scope.deleteTrack = function () {
+            if ($scope.idOfTrackAssignedToDelete > 0) {
                 for (var i = 0; i < tracks.length; i++) {
                     if (tracks[i].id == $scope.idOfTrackAssignedToDelete) {
 
@@ -39,8 +40,4 @@ angular.module("teamMusic")
             }
         };
 
-        //tracks permissions
-        $scope.isTrackOwner = function (track) {
-            return Permissions.hasObjectPermission(Account.getUser(), track);
-        }
     });

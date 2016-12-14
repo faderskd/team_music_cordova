@@ -14,7 +14,6 @@ angular.module('teamMusic')
                         var message = "Well done! You have successfully registered in TeamMusic. Now you can login";
 
                         Messages.setMessage(message);
-                        $scope.resetForm();
                         $state.go('no-logged.login');
 
 

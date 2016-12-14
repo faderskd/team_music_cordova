@@ -1,6 +1,8 @@
 <ion-view view-title="Register">
     <form method="post" name="registerForm" novalidate>
         <ion-content>
+
+            <!----- Non field errors --->
             <div ng-show="errors.non_field_errors" class="error-container head-error-container">
                 <div class="error">
                     <i class="ion-information-circled"></i>
@@ -9,6 +11,8 @@
             </div>
 
             <div class="list">
+
+                <!----- Username --->
                 <label class="item item-input">
                     <input placeholder="Username" type="text" name="username"
                            ng-model="newUser.username" required>
@@ -27,7 +31,7 @@
                     </div>
                 </div>
 
-
+                <!----- Password --->
                 <label class="item item-input">
                     <input placeholder="Password" type="password" name="password"
                            ng-model="newUser.password" required minlength="6">
@@ -47,6 +51,7 @@
                 </div>
 
 
+                <!----- Password confirmation--->
                 <label class="item item-input">
                     <input placeholder="Password confirm" type="password" name="password2"
                            password-check="newUser.password" ng-model="newUser.password2" required>
@@ -59,6 +64,7 @@
                 </div>
 
 
+                <!----- Email --->
                 <label class="item item-input">
                     <input placeholder="Email" type="email" name="uEmail" ng-model="newUser.email"
                            required>
@@ -78,6 +84,7 @@
                 </div>
             </div>
 
+            <!----- Submit button --->
             <div class="padding">
                 <button type="submit" ng-click="saveRegisterForm(newUser)"
                         class="button button-block button-positive activated">Register

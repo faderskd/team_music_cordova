@@ -1,14 +1,33 @@
 <ion-view view-title="Track list">
 
+
+    <ion-header-bar class="bar-positive">
+        <div class="buttons">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+            </button>
+        </div>
+        <div class="buttons">
+            <button class="button button-icon icon ion-ios-minus-outline"
+                    ng-click="showDelete = !showDelete; showReorder = false"></button>
+            <button class="button button-icon icon ion-ios-plus-outline"></button>
+        </div>
+        <h1 class="title">Track list</h1>
+
+    </ion-header-bar>
+
     <ion-content>
-        <ion-list can-swipe="true">
+
+        <ion-list can-swipe="true" show-delete="showDelete">
 
             <ion-item class="item item-thumbnail-left" ng-repeat="track in tracks">
                 <img ng-src="{{track.image_url}}">
 
 
                 <h2>{{track.title}}</h2>
-                <ion-option-button class="button-positive">Edit</ion-option-button>
+                <ion-option-button class="button-calm">Delete</ion-option-button>
+                <ion-delete-button class="ion-minus-circled"
+                                   ng-click="">
+                </ion-delete-button>
             </ion-item>
 
         </ion-list>

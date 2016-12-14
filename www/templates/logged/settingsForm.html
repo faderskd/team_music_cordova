@@ -1,6 +1,21 @@
 <ion-view view-title="Settings">
+
     <form method="post" name="settingsForm" novalidate>
+
+        <!----- Common navbar --->
+        <ion-nav-bar class="bar-stable">
+            <ion-nav-back-button>
+            </ion-nav-back-button>
+
+            <ion-nav-buttons side="left">
+                <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+                </button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+
         <ion-content>
+
+            <!-- Non field errors -->
             <div ng-show="error.non_field_errors" class="error-container head-error-container">
                 <div class="error">
                     <i class="ion-information-circled">
@@ -10,14 +25,19 @@
             </div>
 
             <div class="list">
+
+                <!----- Username --->
                 <label class="item item-input">
                     <input class="form-control" type="text"
                            disabled ng-model="user.username">
                 </label>
 
+
+                <!----- New password --->
                 <label class="item item-input">
                     <input type="password" name="old_password" ng-model="user.old_password"
-                           check-all-passwords-filled password1="user.new_password1" password2="user.new_password2"
+                           check-all-passwords-filled-and-match password1="user.new_password1"
+                           password2="user.new_password2"
                            placeholder="Old password">
                 </label>
 
@@ -34,9 +54,11 @@
                     </div>
                 </div>
 
+
+                <!----- Password confirmation --->
                 <label class="item item-input">
                     <input type="password" name="new_password1" ng-model="user.new_password1" minlength="6"
-                           placeholder="New password" check-all-passwords-filled
+                           placeholder="New password" check-all-passwords-filled-and-match
                            password1="user.old_password" password2="user.new_password2">
                 </label>
 
@@ -48,8 +70,9 @@
 
                 <label class="item item-input">
                     <input type="password" name="new_password2" ng-model="user.new_password2"
-                           placeholder="Confirm password" check-all-passwords-filled
-                           password1="user.old_password" password2="user.new_password1">
+                           placeholder="Confirm password" check-all-passwords-filled-and-match
+                           password1="user.old_password" password2="user.new_password1"
+                           check-with="user.new_password1">
                 </label>
 
                 <div class="error-container last-error-container"
@@ -58,6 +81,8 @@
                     <div ng-messages-include="error-messages.html"></div>
                 </div>
 
+
+                <!----- Email --->
                 <label class="item item-input">
                     <input type="text" name="email" ng-model="user.email" required
                            placeholder="Email">
@@ -76,6 +101,8 @@
                     </div>
                 </div>
 
+
+                <!----- Submit button --->
                 <div class="padding">
                     <button type="submit" ng-click="saveSettingsForm(user)"
                             class="button button-block button-positive activated">Save

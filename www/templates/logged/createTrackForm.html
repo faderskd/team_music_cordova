@@ -1,0 +1,83 @@
+<ion-view>
+    <form name="trackForm" enctype="multipart/form-data" novalidate>
+        <ion-content>
+
+            <div ng-show="errors.non_field_errors" class="error-container head-error-container">
+                <div class="error">
+                    <i class="ion-information-circled"></i>
+                    {{ errors.non_field_errors[0] }}
+                </div>
+            </div>
+
+            <div class="list">
+                <label class="item item-input">
+                    <input type="text" name="title" ng-model="newTrack.title" class="form-control" placeholder="Title"
+                           ng-minlength="4" required>
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="trackForm.submitted && trackForm.title.$error"
+                     ng-messages="trackForm.title.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                    <div ng-message="minlength">
+                        Minimum length of this field is 4 characters!
+                    </div>
+                </div>
+
+                <div class="error-container last-error-container" ng-show="errors.title">
+                    <div class="error">
+                        <i class="ion-information-circled"></i>
+                        {{ errors.title[0] }}
+                    </div>
+                </div>
+
+                <label class="item item-input">
+                    <input class="form-control" name="file" type="file" check-size="100" ng-model="tmp_file"
+                           on-change-update-name
+                           on-change-update-file-model="newTrack.file" required>
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="trackForm.submitted && trackForm.file.$error"
+                     ng-messages="trackForm.file.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+                <div class="error-container last-error-container" ng-show="errors.file">
+                    <div class="error">
+                        <i class="ion-information-circled"></i>
+                        {{ file.password[0] }}
+                    </div>
+                </div>
+
+                <label class="item item-input">
+                    <input class="form-control" name="image" type="file" check-size="5" ng-model="tmp_image"
+                           on-change-update-name
+                           on-change-update-file-model="newTrack.image">
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="trackForm.submitted && trackForm.image.$error"
+                     ng-messages="trackForm.image.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+                <div class="error-container last-error-container" ng-show="errors.file">
+                    <div class="error">
+                        <i class="ion-information-circled"></i>
+                        {{ image.password[0] }}
+                    </div>
+                </div>
+
+            </div>
+
+        </ion-content>
+
+        <div class="padding">
+            <button type="submit" ng-click="saveTrackForm(newTrack)"
+                    class="button button-block button-positive activated">Save
+            </button>
+        </div>
+
+    </form>
+</ion-view>

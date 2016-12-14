@@ -14,7 +14,9 @@ angular.module('teamMusic')
                     data: user
                 }).then(
                     function successCallback(response) {
-                        var currentUser = Account.get
+                        var currentUser = Account.getUser();
+                        currentUser.email = user.email;
+                        Account.setUser(currentUser);
                         $state.go('logged.settings', {}, {reload: true});
                     },
                     function errorCallback(response) {
@@ -27,19 +29,29 @@ angular.module('teamMusic')
             $scope.settingsForm.submitted = true;
         }
     })
-    .directive('checkAllPasswordsFilled', function () {
+    .directive('checkAllPasswordsFilledAndMatch', function () {
         return {
             require: 'ngModel',
             restrict: 'A',
             scope: {
-                password1: '=password1',
-                password2: '=password2'
+                password1: '=',
+                password2: '=',
+                checkWith: '='
             },
             link: function link(scope, element, attrs, ngModel) {
 
                 ngModel.$validators.required = function (modelValue, viewValue) {
                     return !((scope.password1 || scope.password2) && !modelValue);
                 };
+
+                if (attrs.checkWith) {
+                    ngModel.$validators.pwmatch = function (modelValue, viewValue) {
+                        if (modelValue || scope.checkWith) {
+                            return modelValue == scope.checkWith;
+                        }
+                        return true;
+                    };
+                }
 
                 scope.$watch('password1', function () {
                     ngModel.$validate();
