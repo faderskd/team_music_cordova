@@ -21,6 +21,17 @@
 
     </ion-header-bar>
 
+    <ion-header-bar class="bar bar-subheader item-input-inset">
+        <label class="item-input-wrapper textbox-search">
+            <i class="icon ion-android-search placeholder-icon"></i>
+            <input type="search" placeholder="Search" ng-model="searchTitle">
+            <button ng-if="searchTitle.length"
+                    class="button button-icon ion-android-close input-button"
+                    ng-click="clearSearch()">
+            </button>
+        </label>
+    </ion-header-bar>
+
     <ion-content>
 
         <ion-list can-swipe="true" show-delete="showDelete">
@@ -30,7 +41,10 @@
 
 
                 <h2>{{track.title}}</h2>
-                <ion-option-button class="button-balanced " ui-sref="logged.edit-track({trackId: {{track.id}} })">Edit</ion-option-button>
+                <ion-option-button ng-if="isTrackOwner(track)" class="button-balanced"
+                                   ui-sref="logged.edit-track({trackId: {{track.id}} })">
+                    Edit
+                </ion-option-button>
                 <ion-delete-button class="ion-minus-circled"
                                    ng-click="">
                 </ion-delete-button>

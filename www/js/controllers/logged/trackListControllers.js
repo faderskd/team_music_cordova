@@ -1,5 +1,5 @@
 angular.module("teamMusic")
-    .controller("trackListController", function ($scope, $http, $state, Account, ApiUrls) {
+    .controller("trackListController", function ($scope, $http, $state, Account, ApiUrls, Permissions) {
 
         $scope.show();
         $http({
@@ -18,6 +18,12 @@ angular.module("teamMusic")
         $scope.nameOfTrackAssignedToDelete = '';
         $scope.showDeleteTrackModal = true;
         $scope.showDelete = false;
+
+
+        $scope.isTrackOwner = function (track) {
+            return Permissions.hasObjectPermission(Account.getUser(), track);
+        };
+
 
         // deleting tracks functions
         $scope.assignTrackToDelete = function (track) {
