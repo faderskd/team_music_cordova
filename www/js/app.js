@@ -90,4 +90,15 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule'])
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         $httpProvider.interceptors.push("authorizationInterceptor");
         $httpProvider.interceptors.push("unauthorizedInterceptor");
+    })
+    .controller("teamMusicController", function ($scope, $ionicLoading) {
+        $scope.show = function () {
+            $ionicLoading.show({
+                template: '<ion-spinner icon="lines"></ion-spinner>'
+            });
+        };
+        $scope.hide = function () {
+            $ionicLoading.hide();
+        }
+
     });

@@ -1,6 +1,7 @@
 angular.module("teamMusic")
     .controller("trackListController", function ($scope, $http, $state, Account, ApiUrls) {
 
+        $scope.show();
         $http({
             method: 'GET',
             url: ApiUrls.tracksUrl
@@ -8,7 +9,9 @@ angular.module("teamMusic")
                 $scope.tracks = response.data;
             }, function errorsCallback(response) {
             }
-        );
+        ).finally(function () {
+                $scope.hide();
+            });
 
         // deleting tracks variables
         $scope.idOfTrackAssignedToDelete = -1;

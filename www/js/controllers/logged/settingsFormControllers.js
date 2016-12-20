@@ -1,5 +1,5 @@
 angular.module('teamMusic')
-    .controller('settingsFormController', function ($scope, $http, $state, ApiUrls, Account) {
+    .controller('settingsFormController', function ($scope, $http, $state, $ionicPopup, ApiUrls, Account) {
         var currentUser = Account.getUser();
         $scope.user = {
             username: currentUser.username,
@@ -17,7 +17,12 @@ angular.module('teamMusic')
                         var currentUser = Account.getUser();
                         currentUser.email = user.email;
                         Account.setUser(currentUser);
-                        $state.go('logged.settings', {}, {reload: true});
+
+                        $ionicPopup.alert({
+                            title: 'Settings updated successfully!'
+                        }).then(function (res) {
+                            $state.go('logged.settings', {}, {reload: true});
+                        });
                     },
                     function errorCallback(response) {
                         if (response.status == 400) {

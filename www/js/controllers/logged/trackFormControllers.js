@@ -1,5 +1,5 @@
 angular.module("teamMusic")
-    .controller("createTrackFormController", function ($scope, $state, Messages, ApiUrls, multipartForm) {
+    .controller("createTrackFormController", function ($scope, $state, $ionicPopup, ApiUrls, multipartForm) {
 
         $scope.errors = {};
 
@@ -11,9 +11,12 @@ angular.module("teamMusic")
                     newTrack
                 ).then(
                     function successCallback(response) {
-                        $scope.$apply(function () {
+                        $ionicPopup.alert({
+                            title: 'Track added successfully!',
+                            template: ''
+                        }).then(function (res) {
+                            $state.go('logged.create-track', {}, {reload: true})
                         });
-                        $state.go('logged.create-track', {}, {reload: true})
                     },
                     function errorsCallback(response) {
                         if (response.status == 400)
@@ -26,7 +29,8 @@ angular.module("teamMusic")
             $scope.trackForm.submitted = true;
         }
     })
-    .controller("editTrackFormController", function ($scope, $http, $state, $stateParams, Messages, ApiUrls, multipartForm) {
+    .controller("editTrackFormController", function ($scope, $http, $state, $stateParams, $ionicPopup, ApiUrls,
+                                                     multipartForm) {
 
         var trackId = $stateParams.trackId;
         $scope.errors = {};
@@ -56,7 +60,10 @@ angular.module("teamMusic")
                     track
                 ).then(
                     function successCallback(response) {
-                        $scope.$apply(function () {
+                        $ionicPopup.alert({
+                            title: 'Track updated successfully!',
+                            template: ''
+                        }).then(function (res) {
                         });
                     },
                     function errorsCallback(response) {

@@ -1,5 +1,5 @@
 angular.module('teamMusic')
-    .controller('registerFormController', function ($scope, $http, $state, Messages, ApiUrls) {
+    .controller('registerFormController', function ($scope, $http, $state, $ionicPopup, ApiUrls) {
 
         $scope.saveRegisterForm = function (newUser) {
             if ($scope.registerForm.$valid) {
@@ -9,10 +9,12 @@ angular.module('teamMusic')
                     data: newUser
                 }).then(function successCallback(response) {
                         var message = "Well done! You have successfully registered in TeamMusic. Now you can login";
-
-                        Messages.setMessage(message);
-                        $state.go('no-logged.login');
-
+                        $ionicPopup.alert({
+                            title: message,
+                            template: ''
+                        }).then(function (res) {
+                            $state.go('no-logged.login');
+                        });
                     }, function errorCallback(response) {
                         $scope.errors = response.data;
                     }
