@@ -1,14 +1,9 @@
 <ion-view view-title="Register">
-    <form method="post" name="registerForm" novalidate>
+    <form method="post" on-change-clear-server-error name="registerForm" novalidate>
         <ion-content>
 
-            <!----- Non field errors --->
-            <div ng-show="errors.non_field_errors" class="error-container head-error-container">
-                <div class="error">
-                    <i class="ion-information-circled"></i>
-                    {{ errors.non_field_errors[0] }}
-                </div>
-            </div>
+            <!---- Header messages ---->
+            <div ng-include="'templates/common/headerMessages.html'"></div>
 
             <div class="list">
 

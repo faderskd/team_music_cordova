@@ -1,15 +1,21 @@
 <ion-view view-title="Track list">
 
-
+    <!--- List header --->
     <ion-header-bar class="bar-positive">
+        <!--- Menu button --->
         <div class="buttons">
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
             </button>
         </div>
+
         <div class="buttons">
+            <!--- Show delete button --->
             <button class="button button-icon icon ion-ios-minus-outline"
                     ng-click="showDelete = !showDelete; showReorder = false"></button>
-            <button class="button button-icon icon ion-ios-plus-outline"></button>
+
+            <!--- Add track button --->
+            <button class="button button-icon icon ion-ios-plus-outline"
+                    ui-sref="logged.create-track"></button>
         </div>
         <h1 class="title">Track list</h1>
 
@@ -24,7 +30,7 @@
 
 
                 <h2>{{track.title}}</h2>
-                <ion-option-button class="button-calm">Delete</ion-option-button>
+                <ion-option-button class="button-balanced " ui-sref="logged.edit-track({trackId: {{track.id}} })">Edit</ion-option-button>
                 <ion-delete-button class="ion-minus-circled"
                                    ng-click="">
                 </ion-delete-button>

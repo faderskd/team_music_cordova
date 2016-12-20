@@ -1,4 +1,4 @@
-<ion-view view-title="New track">
+<ion-view view-title="Edit track">
     <form name="trackForm" on-change-clear-server-error enctype="multipart/form-data" novalidate>
 
         <!----- Common navbar --->
@@ -21,7 +21,7 @@
 
                 <!---- Title ----->
                 <label class="item item-input">
-                    <input type="text" name="title" ng-model="newTrack.title" class="form-control" placeholder="Title"
+                    <input type="text" name="title" ng-model="track.title" class="form-control" placeholder="Title"
                            minlength="4" required>
                 </label>
 
@@ -48,9 +48,9 @@
                     <label class="button button-small button-positive custom-file-upload">
                         <input class="form-control" name="file" type="file" check-size="100" ng-model="tmp_file"
                                on-change-update-name
-                               on-change-update-file-model="newTrack.file" required>
-                        <span ng-if="!newTrack.file">Choose file</span>
-                        <span ng-if="newTrack.file">{{newTrack.file.name}}</span>
+                               on-change-update-file-model="track.file">
+                        <span ng-if="!track.file">Change file</span>
+                        <span ng-if="track.file">{{track.file.name}}</span>
                     </label>
                 </label>
 
@@ -72,9 +72,9 @@
                     <label class="button button-small button-positive custom-file-upload">
                         <input class="form-control" name="image" type="file" check-size="5" ng-model="tmp_image"
                                on-change-update-name
-                               on-change-update-file-model="newTrack.image">
-                        <span ng-if="!newTrack.image">Choose image</span>
-                        <span ng-if="newTrack.image">{{newTrack.image.name}}</span>
+                               on-change-update-file-model="track.image">
+                        <span ng-if="!track.image">Change image</span>
+                        <span ng-if="track.image">{{track.image.name}}</span>
                     </label>
                 </label>
 
@@ -91,11 +91,13 @@
                     </div>
                 </div>
 
+                <ion-checkbox ng-model="track.delete_image">Clear image</ion-checkbox>
+
             </div>
 
             <!---- Submit button ----->
             <div class="padding">
-                <button type="submit" ng-click="saveTrackForm(newTrack)"
+                <button type="submit" ng-click="saveTrackForm(track)"
                         class="button button-block button-positive activated">Save
                 </button>
             </div>

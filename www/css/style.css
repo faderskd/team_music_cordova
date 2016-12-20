@@ -40,3 +40,15 @@
 .pointer {
   cursor: pointer;
 }
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    min-width: 30%;
+    max-width: 90%;
+}

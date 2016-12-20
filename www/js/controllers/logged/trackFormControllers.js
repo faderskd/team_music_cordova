@@ -13,6 +13,7 @@ angular.module("teamMusic")
                     function successCallback(response) {
                         $scope.$apply(function () {
                         });
+                        $state.go('logged.create-track', {}, {reload: true})
                     },
                     function errorsCallback(response) {
                         if (response.status == 400)
@@ -25,8 +26,7 @@ angular.module("teamMusic")
             $scope.trackForm.submitted = true;
         }
     })
-    .controller("editTrackFormController", function ($scope, $http, $state, $stateParams, Messages, ApiUrls,
-                                                     Permissions, Account, multipartForm) {
+    .controller("editTrackFormController", function ($scope, $http, $state, $stateParams, Messages, ApiUrls, multipartForm) {
 
         var trackId = $stateParams.trackId;
         $scope.errors = {};

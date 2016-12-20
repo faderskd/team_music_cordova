@@ -1,8 +1,5 @@
 angular.module('teamMusic')
-    .controller('registerFormController', function ($scope, $rootScope, $location, $http, $state, Messages, ApiUrls) {
-
-        $scope.errors = {};
-        $scope.newUser = {};
+    .controller('registerFormController', function ($scope, $http, $state, Messages, ApiUrls) {
 
         $scope.saveRegisterForm = function (newUser) {
             if ($scope.registerForm.$valid) {
@@ -15,7 +12,6 @@ angular.module('teamMusic')
 
                         Messages.setMessage(message);
                         $state.go('no-logged.login');
-
 
                     }, function errorCallback(response) {
                         $scope.errors = response.data;

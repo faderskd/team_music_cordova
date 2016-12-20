@@ -1,6 +1,6 @@
 <ion-view view-title="Settings">
 
-    <form method="post" name="settingsForm" novalidate>
+    <form method="post" on-change-clear-server-error name="settingsForm" novalidate>
 
         <!----- Common navbar --->
         <ion-nav-bar class="bar-stable">
@@ -15,14 +15,8 @@
 
         <ion-content>
 
-            <!-- Non field errors -->
-            <div ng-show="error.non_field_errors" class="error-container head-error-container">
-                <div class="error">
-                    <i class="ion-information-circled">
-                        {{errors.non_field_errors[0]}}
-                    </i>
-                </div>
-            </div>
+            <!---- Header messages ---->
+            <div ng-include="'templates/common/headerMessages.html'"></div>
 
             <div class="list">
 
@@ -33,7 +27,7 @@
                 </label>
 
 
-                <!----- New password --->
+                <!----- Old password --->
                 <label class="item item-input">
                     <input type="password" name="old_password" ng-model="user.old_password"
                            check-all-passwords-filled-and-match password1="user.new_password1"
@@ -55,7 +49,7 @@
                 </div>
 
 
-                <!----- Password confirmation --->
+                <!----- New password --->
                 <label class="item item-input">
                     <input type="password" name="new_password1" ng-model="user.new_password1" minlength="6"
                            placeholder="New password" check-all-passwords-filled-and-match
@@ -68,6 +62,8 @@
                     <div ng-messages-include="error-messages.html"></div>
                 </div>
 
+
+                <!----- Password confirmation --->
                 <label class="item item-input">
                     <input type="password" name="new_password2" ng-model="user.new_password2"
                            placeholder="Confirm password" check-all-passwords-filled-and-match

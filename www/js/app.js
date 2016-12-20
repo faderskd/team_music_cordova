@@ -67,6 +67,18 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule'])
                 templateUrl: 'templates/logged/trackList.html',
                 controller: 'trackListController',
                 cache: false
+            })
+            .state('logged.create-track', {
+                url: '/create-track',
+                templateUrl: 'templates/logged/createTrackForm.html',
+                controller: 'createTrackFormController',
+                cache: false
+            })
+            .state('logged.edit-track', {
+                url: '/edit-track/:trackId',
+                templateUrl: 'templates/logged/editTrackForm.html',
+                controller: 'editTrackFormController',
+                cache: false
             });
 
         $urlRouterProvider.otherwise('/no-logged/login');

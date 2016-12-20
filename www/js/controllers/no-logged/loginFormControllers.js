@@ -1,7 +1,6 @@
 angular.module('teamMusic')
-    .controller('loginFormController', function ($scope, $location, localStorageService, $window, $state, Account, ApiUrls) {
+    .controller('loginFormController', function ($scope, $state, Account, ApiUrls) {
 
-        $scope.user = {};
         $scope.saveLoginForm = function (user) {
             if ($scope.loginForm.$valid) {
                 Account.login(ApiUrls.loginUrl, user)
