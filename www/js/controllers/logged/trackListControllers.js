@@ -1,17 +1,5 @@
 angular.module("teamMusic")
-    .controller("trackListController", function ($scope, $http, $state, Account, ApiUrls, Permissions) {
-
-        $scope.show();
-        $http({
-            method: 'GET',
-            url: ApiUrls.tracksUrl
-        }).then(function successCallback(response) {
-                $scope.tracks = response.data;
-            }, function errorsCallback(response) {
-            }
-        ).finally(function () {
-                $scope.hide();
-            });
+    .controller("trackListController", function ($scope, $http, $state, $stateParams, Account, ApiUrls, Permissions) {
 
         // deleting tracks variables
         $scope.idOfTrackAssignedToDelete = -1;
@@ -19,6 +7,37 @@ angular.module("teamMusic")
         $scope.showDeleteTrackModal = true;
         $scope.showDelete = false;
 
+        $scope.show();
+        $http({
+            method: 'GET',
+            url: ApiUrls.tracksUrl
+        }).then(function successCallback(response) {
+                $scope.tracks = response.data;
+                $scope.tracksCopy = response.data;
+            }, function errorsCallback(response) {
+            }
+        ).finally(function () {
+                $scope.hide();
+            });
+
+        $scope.searchTracks = function (title) {
+            if (title.length > 2) {
+                $scope.show();
+                $http({
+                    method: 'GET',
+                    url: ApiUrls.tracksUrl + '?title=' + title
+                }).then(function successCallback(response) {
+                        $scope.tracks = response.data;
+                    }, function errorsCallback(response) {
+                    }
+                ).finally(function () {
+                        $scope.hide();
+                    });
+            }
+            else {
+                $scope.tracks = $scope.tracksCopy;
+            }
+        };
 
         $scope.isTrackOwner = function (track) {
             return Permissions.hasObjectPermission(Account.getUser(), track);
