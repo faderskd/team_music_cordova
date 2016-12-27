@@ -55,14 +55,14 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
     };
 
     function find(track) {
-        if (track.id < 0) return;
+        if (track.t_id < 0) return;
 
         var replaceTrack = tracks.filter(function(localTrack) {
-            return localTrack.id == track.id;
+            return localTrack.t_id == track.t_id;
         }).pop();
 
         if (replaceTrack) {
-            tracks.splice(replaceTrack.id, 1, track);
+            tracks.splice(replaceTrack.t_id, 1, track);
         }
         return replaceTrack;
      }
@@ -94,11 +94,11 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
         });
 
         if (find(track)) {
-            return track.id;
+            return track.t_id;
         }
 
-        track.id  = tracks.push(track) - 1;
-        return track.id;
+        track.t_id  = tracks.push(track) - 1;
+        return track.t_id;
     }
 
     function play(trackID) {
@@ -106,7 +106,7 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
 
         // avoid two tracks playing simultaneously
         if (currentTrack) {
-            if (currentTrack.id == trackID) {
+            if (currentTrack.t_id == trackID) {
                 if (currentTrack.status == Media.MEDIA_RUNNING) {
                     pause();
                 } else {
@@ -116,7 +116,7 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
                 }
                 return;
             } else {
-                if (currentTrack.id > -1) {
+                if (currentTrack.t_id > -1) {
                     stop();
                 }
             }
@@ -274,7 +274,7 @@ function ionAudioTrack(MediaManager, $rootScope) {
             newTrack.progress = 0;
             newTrack.status = 0;
             newTrack.duration = -1;
-            if (oldTrack && oldTrack.id !== undefined) newTrack.id = oldTrack.id;
+            if (oldTrack && oldTrack.t_id !== undefined) newTrack.t_id = oldTrack.t_id;
 
             if (MediaManager) {
                 MediaManager.add(newTrack, playbackSuccess, null, statusChange, progressChange);
@@ -307,12 +307,12 @@ function ionAudioTrack(MediaManager, $rootScope) {
         this.start = function() {
             if (!$scope.track || !$scope.track.url) return;
 
-            MediaManager.play($scope.track.id);
+            MediaManager.play($scope.track.t_id);
 
             // notify global progress bar if detached from track
             if (!controller.hasOwnProgressBar) notifyProgressBar();
 
-            return $scope.track.id;
+            return $scope.track.t_id;
         };
 
         var unbindWatcher = $scope.$watch('track', function(newTrack, oldTrack) {
