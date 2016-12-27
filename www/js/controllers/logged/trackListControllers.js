@@ -39,6 +39,7 @@ angular.module("teamMusic")
             }
         };
 
+
         $scope.isTrackOwner = function (track) {
             return Permissions.hasObjectPermission(Account.getUser(), track);
         };

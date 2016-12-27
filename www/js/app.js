@@ -79,6 +79,12 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule', 'ionic
                 templateUrl: 'templates/logged/editTrackForm.html',
                 controller: 'editTrackFormController',
                 cache: false
+            })
+            .state('logged.playlist-list', {
+                url: '/playlist-list',
+                templateUrl: 'templates/logged/playlistList.html',
+                controller: 'playlistListController',
+                cache: false
             });
 
         $urlRouterProvider.otherwise('/no-logged/login');

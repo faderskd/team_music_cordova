@@ -24,11 +24,12 @@
     <ion-header-bar class="bar bar-subheader item-input-inset">
         <label class="item-input-wrapper textbox-search">
             <i class="icon ion-android-search placeholder-icon"></i>
-            <input type="search" placeholder="Search" ng-model="searchTitle" ng-change="searchTracks(searchTitle)" ng-model-options="{debounce:500}">
+            <input type="search" placeholder="Search" ng-model="searchTitle" ng-change="searchTracks(searchTitle)"
+                   ng-model-options="{debounce:500}">
         </label>
     </ion-header-bar>
 
-    <ion-content>
+    <ion-content class="has-footer">
 
         <ion-list can-swipe="true" show-delete="showDelete">
 
@@ -37,15 +38,26 @@
 
 
                 <h2>{{track.title}}</h2>
+
+                <ion-audio-track track="track">
+                    <ion-audio-controls>
+                        <a class="button button-icon icon" ion-audio-play></a>
+                        <ion-spinner style="position: relative;top:8px;"></ion-spinner>
+                    </ion-audio-controls>
+                </ion-audio-track>
                 <ion-option-button ng-if="isTrackOwner(track)" class="button-balanced"
                                    ui-sref="logged.edit-track({trackId: {{track.id}} })">
                     Edit
                 </ion-option-button>
-                <ion-delete-button class="ion-minus-circled"
-                                   ng-click="">
+                <ion-delete-button ng-if="isTrackOwner(track)" class="ion-minus-circled"
+                                   ng-click="deleteTrack(track)">
                 </ion-delete-button>
             </ion-item>
 
         </ion-list>
+
     </ion-content>
+    <ion-footer-bar align-title="left" class="bar bar-positive">
+        <ion-audio-progress-bar track="tracks[0]" display-time></ion-audio-progress-bar>
+    </ion-footer-bar>
 </ion-view>

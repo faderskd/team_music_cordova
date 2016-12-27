@@ -1,0 +1,52 @@
+<ion-view view-title="Playlist list">
+
+    <!--- List header --->
+    <ion-header-bar class="bar-positive">
+        <!--- Menu button --->
+        <div class="buttons">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+            </button>
+        </div>
+
+        <div class="buttons">
+            <!--- Show delete button --->
+            <button class="button button-icon icon ion-ios-minus-outline"
+                    ng-click="showDelete = !showDelete; showReorder = false"></button>
+
+            <!--- Add playlist button --->
+            <button class="button button-icon icon ion-ios-plus-outline"
+                    ui-sref=""></button>
+        </div>
+        <h1 class="title">Playlist list</h1>
+
+    </ion-header-bar>
+
+    <ion-header-bar class="bar bar-subheader item-input-inset">
+        <label class="item-input-wrapper textbox-search">
+            <i class="icon ion-android-search placeholder-icon"></i>
+            <input type="search" placeholder="Search" ng-model="searchTitle" ng-change="searchTracks(searchTitle)"
+                   ng-model-options="{debounce:500}">
+        </label>
+    </ion-header-bar>
+
+    <ion-content class="has-footer">
+
+        <ion-list can-swipe="true" show-delete="showDelete">
+
+            <ion-item ng-repeat="playlist in playlists">
+
+                <h2>{{playlist.title}}</h2>
+
+                <ion-option-button ng-if="isPlaylistOwner(playlist)" class="button-balanced"
+                                   ui-sref="">
+                    Edit
+                </ion-option-button>
+                <ion-delete-button ng-if="isPlaylistOwner(playlist)" class="ion-minus-circled"
+                                   ng-click="deletePlaylist(playlist)">
+                </ion-delete-button>
+            </ion-item>
+
+        </ion-list>
+
+    </ion-content>
+</ion-view>
