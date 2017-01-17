@@ -46,7 +46,7 @@
                 <!---- File ----->
                 <label class="item item-input">
                     <label class="button button-small button-positive custom-file-upload">
-                        <input class="form-control" name="file" type="file" check-size="100" ng-model="tmp_file"
+                        <input class="form-control" name="file" type="file" check-size="100" ng-model="file"
                                on-change-update-name
                                on-change-update-file-model="newTrack.file" required>
                         <span ng-if="!newTrack.file">Choose file</span>
@@ -70,7 +70,7 @@
                 <!---- Image ----->
                 <label class="item item-input">
                     <label class="button button-small button-positive custom-file-upload">
-                        <input class="form-control" name="image" type="file" check-size="5" ng-model="tmp_image"
+                        <input class="form-control" name="image" type="file" check-size="5" ng-model="image"
                                on-change-update-name
                                on-change-update-file-model="newTrack.image">
                         <span ng-if="!newTrack.image">Choose image</span>

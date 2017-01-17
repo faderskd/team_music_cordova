@@ -1,5 +1,26 @@
 angular.module("teamMusic")
-    .controller("playlistListController", function ($scope, $http, $state, $stateParams, ApiUrls) {
+    .controller("playlistListController", function ($scope, $http, $state, $stateParams, $ionicPopup, $compile,
+                                                    $templateCache, ApiUrls) {
+
+
+        // joining to playlists variables
+        $scope.idOfPlaylistAssignedToJoin = -1;
+        $scope.nameOfPlaylistAssignedToJoin = '';
+        $scope.errors = {};
+        $scope.data = {};
+
+        $scope.show();
+        $http({
+            method: 'GET',
+            url: ApiUrls.playlistUrl
+        }).then(function successCallback(response) {
+                $scope.playlists = response.data;
+            }, function errorsCallback(response) {
+            }
+        ).finally(function () {
+                $scope.hide();
+            });
+
 
         // searching by title
         $scope.searchPlaylists = function (title) {
@@ -13,70 +34,18 @@ angular.module("teamMusic")
             );
         };
 
-        var searchedPlaylistTitle = $routeParams.title;
+        $scope.deletePlaylist = function (playlist) {
+            for (var i = 0; i < $scope.playlists.length; i++) {
+                if ($scope.playlists[i].id == playlist.id) {
 
-        if (angular.isString(searchedPlaylistTitle) && searchedPlaylistTitle.length > 2) {
-            $scope.searchPlaylists(searchedPlaylistTitle, 10);
-            $scope.searchView = true;
-        }
-        else {
-            $http({
-                method: 'GET',
-                url: ApiUrls.playlistUrl
-            }).then(function successCallback(response) {
-                    $scope.playlists = response.data;
-                }, function errorsCallback(response) {
-                }
-            );
-        }
-
-        //redirect to searchView
-        $scope.redirectToSearch = function (title) {
-            $location.search('title', title);
-        };
-
-        // pagination variables
-        $scope.selectedPage = 1;
-        $scope.playlistListPageSize = playlistListPageCount;
-
-        // deleting playlists variables
-        $scope.idOfPlaylistAssignedToDelete = -1;
-        $scope.nameOfPlaylistAssignedToDelete = '';
-
-
-        // joining to playlists variables
-        $scope.idOfPlaylistAssignedToJoin = -1;
-        $scope.nameOfPlaylistAssignedToJoin = '';
-        $scope.errors = {};
-
-        // pagination functions
-        $scope.selectPage = function (page) {
-            $scope.selectedPage = page;
-        };
-        $scope.getPageClass = function (page) {
-            return $scope.selectedPage == page ? playlistListActivePage : playlistListInactivePage;
-        };
-
-        // deleting playlists functions
-        $scope.assignPlaylistToDelete = function (playlist) {
-            $scope.idOfPlaylistAssignedToDelete = playlist.id;
-            $scope.nameOfPlaylistAssignedToDelete = playlist.title;
-        };
-
-        $scope.deleteAssignedPlaylist = function (playlists) {
-            if ($scope.idOfPlaylistAssignedToDelete > 0 && angular.isArray(playlists)) {
-                for (var i = 0; i < playlists.length; i++) {
-                    if (playlists[i].id == $scope.idOfPlaylistAssignedToDelete) {
-
-                        $http({
-                            method: 'DELETE',
-                            url: ApiUrls.playlistUrl + playlists[i].id + '/'
-                        }).then(function successCallback(response) {
-                            playlists.splice(i, 1);
-                        }, function errorCallback(response) {
-                        });
-                        return;
-                    }
+                    $http({
+                        method: 'DELETE',
+                        url: ApiUrls.playlistUrl + playlist.id + '/'
+                    }).then(function successCallback(response) {
+                        $scope.playlists.splice(i, 1);
+                    }, function errorCallback(response) {
+                    });
+                    return;
                 }
             }
         };
@@ -87,29 +56,48 @@ angular.module("teamMusic")
             $scope.nameOfPlaylistAssignedToJoin = playlist.title;
         };
 
-        $scope.saveJoinToPlaylistForm = function (password) {
-            if ($scope.joinToPlaylistForm.$valid) {
-                $http({
-                    method: 'POST',
-                    data: {password: password},
-                    url: ApiUrls.playlistUrl + $scope.idOfPlaylistAssignedToJoin + '/join/'
-                }).then(function successCallback(response) {
-
-                    $("#join-to-playlist-modal-form").modal("toggle");
-                    $location.path('/playlists/edit/' + $scope.idOfPlaylistAssignedToJoin);
-                    Messages.setMessage("Now you are editor of playlist " + $scope.nameOfPlaylistAssignedToJoin + ' !');
-
-                }, function errorCallback(response) {
-
-                    if (response.status == 400)
-                        $scope.errors = response.data;
-
-                    if (response.status == 404)
-                        $("#join-to-playlist-modal-form").modal("toggle");
-
-                });
-            }
-            $scope.joinToPlaylistForm.submitted = true;
+        var saveJoinToPlaylistForm = function (password, joinPopup) {
+            $http({
+                method: 'POST',
+                data: {password: password},
+                url: ApiUrls.playlistUrl + $scope.idOfPlaylistAssignedToJoin + '/join/'
+            }).then(function successCallback(response) {
+                joinPopup.close();
+            }, function errorCallback(response) {
+                $scope.errors = response.data;
+            });
         };
 
+        $scope.showPopup = function () {
+
+            var joinPopup = $ionicPopup.show({
+                templateUrl: 'templates/logged/joinPlaylistForm.html',
+                title: 'Enter playlist password',
+                scope: $scope,
+                buttons: [
+                    {text: 'Cancel'},
+                    {
+                        text: '<b>Save</b>',
+                        type: 'button-positie',
+                        onTap: function (e) {
+                            e.preventDefault();
+                            $scope.setErrorIfNoPassword($scope.data.password);
+                            if ($scope.data.password) {
+                                saveJoinToPlaylistForm($scope.data.password, joinPopup);
+                            }
+                        }
+                    }
+                ]
+            });
+
+            $scope.setErrorIfNoPassword = function (password) {
+                if (!password) {
+                    $scope.errors.password = ['This field is required']
+                }
+                else {
+                    $scope.errors.password = undefined;
+                }
+            };
+
+        };
     });

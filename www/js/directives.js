@@ -6,14 +6,9 @@ angular.module('teamMusic')
                 angular.forEach(element.find('input'), function (v, k) {
                     var input = angular.element(v);
                     var errorName = input.attr('ng-model').split('.');
-                    if (errorName.length > 0) {
-                        errorName = errorName[1];
-                    }
-                    else {
-                        errorName = errorName[0]
-                    }
+                    errorName = errorName[errorName.length-1];
                     var errorSetter = $parse('errors.' + errorName).assign;
-                    input.bind('keyup', function () {
+                    input.bind('change', function () {
                         scope.$apply(function () {
                             errorSetter(scope, '');
                         });

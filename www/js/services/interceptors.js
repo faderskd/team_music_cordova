@@ -2,7 +2,7 @@ angular.module("teamMusic").
     factory("unauthorizedInterceptor", function ($q, $injector) {
         return {
             responseError: function (response) {
-                if ([404, 401, 403].indexOf(response.status) > 0) {
+                if ([404, 401].indexOf(response.status) > 0) {
                     var Account = $injector.get("Account");
                     var $state = $injector.get("$state");
                     Account.clearStorage();

@@ -1,0 +1,9 @@
+<input class="form-control" name="password" ng-model="data.password" ng-change="setErrorIfNoPassword(data.password)"
+       placeholder="Password" type="password" required>
+
+<div class="error-container last-error-container" ng-show="errors.password">
+    <div class="error">
+        <i class="ion-information-circled"></i>
+        {{ errors.password[0] }}
+    </div>
+</div>

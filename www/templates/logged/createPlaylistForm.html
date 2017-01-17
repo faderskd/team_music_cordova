@@ -1,0 +1,77 @@
+<ion-view view-title="New playlist">
+    <form name="playlistForm" on-change-clear-server-error enctype="multipart/form-data" novalidate>
+
+        <!----- Common navbar --->
+        <ion-nav-bar class="bar-stable">
+            <ion-nav-back-button>
+            </ion-nav-back-button>
+
+            <ion-nav-buttons side="left">
+                <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+                </button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+
+        <ion-content>
+
+            <!---- Header messages ---->
+            <div ng-include="'templates/common/headerMessages.html'"></div>
+
+            <div class="list">
+
+                <!---- Title ----->
+                <label class="item item-input">
+                    <input type="text" name="title" ng-model="newPlaylist.title" class="form-control"
+                           placeholder="Title"
+                           minlength="4" required>
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="playlistForm.submitted && playlistForm.title.$error"
+                     ng-messages="playlistForm.title.$error">
+                    <div class="error" ng-message="minlength">
+                        <i class="ion-information-circled"></i>
+                        Minimum length of this field is 4 characters!
+                    </div>
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+                <div class="error-container last-error-container" ng-show="errors.title">
+                    <div class="error">
+                        <i class="ion-information-circled"></i>
+                        {{ errors.title[0] }}
+                    </div>
+                </div>
+
+
+                <!---- Password ----->
+                <label class="item item-input">
+                    <input type="text" name="password" ng-model="newPlaylist.password" class="form-control"
+                           placeholder="Password" minlength="6" required>
+                </label>
+
+                <div class="error-container last-error-container"
+                     ng-show="playlistForm.submitted && playlistForm.password.$error"
+                     ng-messages="playlistForm.password.$error">
+                    <div ng-messages-include="error-messages.html"></div>
+                </div>
+
+                <div class="error-container last-error-container" ng-show="errors.password">
+                    <div class="error">
+                        <i class="ion-information-circled"></i>
+                        {{ errors.password[0] }}
+                    </div>
+                </div>
+
+                <!---- Submit button ----->
+                <div class="padding">
+                    <button type="submit" ng-click="savePlaylistForm(newPlaylist)"
+                            class="button button-block button-positive activated">Save
+                    </button>
+                </div>
+            </div>
+        </ion-content>
+
+
+    </form>
+</ion-view>
