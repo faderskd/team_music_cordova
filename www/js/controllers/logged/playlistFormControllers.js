@@ -28,14 +28,36 @@ angular.module('teamMusic')
         }
 
     }).
-    controller("editPlaylistFormController", function ($scope, $http, $state, $stateParams, $ionicPopup, ApiUrls,
-                                                       Permissions, Account) {
-        var playlistId = $stateParams.playlistId;
-        $scope.errors = {};
+    controller("editPlaylistFormController", function ($scope, $http, $state, $stateParams, $ionicPopup,
+                                                       $ionicSlideBoxDelegate, ApiUrls, Permissions, Account) {
 
-        // form is hidden in tab so must be defined before firstly
+        var playlistId = $stateParams.playlistId;
+
+        $scope.numberOfSlides = 3;
+        $scope.activeIndex = 0;
+        $scope.showReorder = false;
+        $scope.errors = {};
         $scope.searchedTracks = [];
         $scope.previouslySearchedTracks = [];
+
+        $scope.moveItem = function (track, fromIndex, toIndex) {
+            //Move the item in the array
+            var track = $scope.playlist.tracks.splice(fromIndex, 1);
+            console.log(track);
+            $scope.playlist.tracks.splice(toIndex, 0, track[0]);
+        };
+
+        $scope.onSlideChangeStart = function (index) {
+            $scope.activeIndex = index;
+        };
+
+        $scope.rightSlide = function () {
+            $ionicSlideBoxDelegate.next();
+        };
+
+        $scope.leftSlide = function () {
+            $ionicSlideBoxDelegate.previous();
+        };
 
         $http({
             method: 'GET',

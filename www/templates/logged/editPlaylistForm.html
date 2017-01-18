@@ -1,77 +1,137 @@
 <ion-view view-title="Edit playlist">
     <form name="playlistForm" on-change-clear-server-error enctype="multipart/form-data" novalidate>
 
-        <!----- Common navbar --->
-        <ion-nav-bar class="bar-stable">
-            <ion-nav-back-button>
-            </ion-nav-back-button>
-
-            <ion-nav-buttons side="left">
+        <!-- Track in playlist editing header -->
+        <ion-header-bar class="bar bar-positive">
+            <!--- Menu button --->
+            <div class="buttons">
                 <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
                 </button>
-            </ion-nav-buttons>
-        </ion-nav-bar>
+            </div>
 
-        <ion-content>
+            <div class="buttons">
+                <!--- Show delete button --->
+                <button ng-disabled="activeIndex == 1" class="button button-icon icon ion-ios-minus-outline"
+                        ng-click="showDelete = !showDelete; showReorder = false"></button>
 
+                <!--- Add track button --->
+                <button ng-disabled="activeIndex == 1" class="button button-icon icon ion-ios-plus-outline"
+                        ui-sref="logged.create-track"></button>
+            </div>
+            <h1 class="title">Edit playlist</h1>
+            <button class="button" ng-click="showDelete = false; showReorder = !showReorder">
+                Reorder
+            </button>
+
+        </ion-header-bar>
+
+        <ion-header-bar class="bar bar-subheader item-input-inset">
+            <i ng-class="{disabled: activeIndex < 1}" ng-click="leftSlide()"
+               class="icon ion-arrow-left-c pointer larger"></i>
+            <pre>  </pre>
+            <i ng-class="{disabled: activeIndex >= numberOfSlides - 1}"
+               ng-click="rightSlide()" class="icon ion-arrow-right-c pointer larger"></i>
+        </ion-header-bar>
+
+
+        <ion-content ng-class="{'has-footer': activeIndex==0}">
             <!---- Header messages ---->
             <div ng-include="'templates/common/headerMessages.html'"></div>
 
-            <div class="list">
+            <ion-slide-box on-slide-changed="onSlideChangeStart(index)" show-pager="false" active-slide="0">
+                <!-- Tracks in playlist list -->
+                <ion-slide>
+                    <ion-list can-swipe="true" show-delete="showDelete" show-reorder="showReorder">
 
-                <!---- Title ----->
-                <label class="item item-input">
-                    <input type="text" name="title" ng-model="playlist.title" class="form-control"
-                           placeholder="Title"
-                           minlength="4" required>
-                </label>
+                        <ion-item class="item item-thumbnail-left" ng-repeat="track in playlist.tracks">
+                            <img ng-src="{{track.image_url}}">
 
-                <div class="error-container last-error-container"
-                     ng-show="playlistForm.submitted && playlistForm.title.$error"
-                     ng-messages="playlistForm.title.$error">
-                    <div class="error" ng-message="minlength">
-                        <i class="ion-information-circled"></i>
-                        Minimum length of this field is 4 characters!
+
+                            <h2>{{track.title}}</h2>
+
+                            <ion-audio-track track="track">
+                                <ion-audio-controls>
+                                    <a class="button button-icon icon" ion-audio-play></a>
+                                    <ion-spinner style="position: relative;top:8px;"></ion-spinner>
+                                </ion-audio-controls>
+                            </ion-audio-track>
+
+                            <ion-delete-button class="ion-minus-circled">
+                            </ion-delete-button>
+
+                            <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)">
+                            </ion-reorder-button>
+                        </ion-item>
+
+                    </ion-list>
+                </ion-slide>
+
+                <ion-slide>
+                    <!-- Base settings form -->
+                    <div class="list">
+                        <!---- Title ----->
+                        <label class="item item-input">
+                            <input type="text" name="title" ng-model="playlist.title" class="form-control"
+                                   placeholder="Title"
+                                   minlength="4" required>
+                        </label>
+
+                        <div class="error-container last-error-container"
+                             ng-show="playlistForm.submitted && playlistForm.title.$error"
+                             ng-messages="playlistForm.title.$error">
+                            <div class="error" ng-message="minlength">
+                                <i class="ion-information-circled"></i>
+                                Minimum length of this field is 4 characters!
+                            </div>
+                            <div ng-messages-include="error-messages.html"></div>
+                        </div>
+
+                        <div class="error-container last-error-container" ng-show="errors.title">
+                            <div class="error">
+                                <i class="ion-information-circled"></i>
+                                {{ errors.title[0] }}
+                            </div>
+                        </div>
+
+
+                        <!---- Password ----->
+                        <label class="item item-input">
+                            <input type="text" name="password" ng-model="playlist.password" class="form-control"
+                                   placeholder="Password" minlength="6" required>
+                        </label>
+
+                        <div class="error-container last-error-container"
+                             ng-show="playlistForm.submitted && playlistForm.password.$error"
+                             ng-messages="playlistForm.password.$error">
+                            <div ng-messages-include="error-messages.html"></div>
+                        </div>
+
+                        <div class="error-container last-error-container" ng-show="errors.password">
+                            <div class="error">
+                                <i class="ion-information-circled"></i>
+                                {{ errors.password[0] }}
+                            </div>
+                        </div>
+
+                        <!---- Submit button ----->
+                        <div class="padding">
+                            <button type="submit" ng-click="savePlaylistForm(playlist)"
+                                    class="button button-block button-positive activated">Save
+                            </button>
+                        </div>
                     </div>
-                    <div ng-messages-include="error-messages.html"></div>
-                </div>
+                </ion-slide>
 
-                <div class="error-container last-error-container" ng-show="errors.title">
-                    <div class="error">
-                        <i class="ion-information-circled"></i>
-                        {{ errors.title[0] }}
-                    </div>
-                </div>
+                <ion-slide>
+                    editors
+                </ion-slide>
+            </ion-slide-box>
 
-
-                <!---- Password ----->
-                <label class="item item-input">
-                    <input type="text" name="password" ng-model="playlist.password" class="form-control"
-                           placeholder="Password" minlength="6" required>
-                </label>
-
-                <div class="error-container last-error-container"
-                     ng-show="playlistForm.submitted && playlistForm.password.$error"
-                     ng-messages="playlistForm.password.$error">
-                    <div ng-messages-include="error-messages.html"></div>
-                </div>
-
-                <div class="error-container last-error-container" ng-show="errors.password">
-                    <div class="error">
-                        <i class="ion-information-circled"></i>
-                        {{ errors.password[0] }}
-                    </div>
-                </div>
-
-                <!---- Submit button ----->
-                <div class="padding">
-                    <button type="submit" ng-click="savePlaylistForm(playlist)"
-                            class="button button-block button-positive activated">Save
-                    </button>
-                </div>
-            </div>
         </ion-content>
 
+        <ion-footer-bar align-title="left" class="bar bar-positive" ng-if="activeIndex==0">
+            <h2>player</h2>
+        </ion-footer-bar>
 
     </form>
 </ion-view>

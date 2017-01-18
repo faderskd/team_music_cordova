@@ -52,3 +52,11 @@ input[type="file"] {
     min-width: 30%;
     max-width: 90%;
 }
+
+.larger {
+    font-size: x-large;
+}
+
+.disabled {
+  opacity: 0.3;
+}
