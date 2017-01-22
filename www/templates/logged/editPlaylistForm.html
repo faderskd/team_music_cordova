@@ -11,15 +11,18 @@
 
             <div class="buttons">
                 <!--- Show delete button --->
-                <button ng-disabled="activeIndex == 1" class="button button-icon icon ion-ios-minus-outline"
+                <button ng-disabled="activeIndex != 0 && (activeIndex != numberOfSlides - 1 || !isAdminEditor)"
+                        class="button button-icon icon ion-ios-minus-outline"
                         ng-click="showDelete = !showDelete; showReorder = false"></button>
 
                 <!--- Add track button --->
-                <button ng-disabled="activeIndex == 1" class="button button-icon icon ion-ios-plus-outline"
+                <button ng-disabled="activeIndex != 0" class="button button-icon icon ion-ios-plus-outline"
                         ui-sref="logged.create-track"></button>
             </div>
             <h1 class="title">Edit playlist</h1>
-            <button class="button" ng-click="showDelete = false; showReorder = !showReorder">
+            <!--- Show reorder button --->
+            <button ng-disabled="activeIndex != 0" class="button"
+                    ng-click="showDelete = false; showReorder = !showReorder">
                 Reorder
             </button>
 
@@ -66,7 +69,7 @@
                     </ion-list>
                 </ion-slide>
 
-                <ion-slide>
+                <ion-slide ng-if="isAdminEditor">
                     <!-- Base settings form -->
                     <div class="list">
                         <!---- Title ----->
@@ -123,7 +126,16 @@
                 </ion-slide>
 
                 <ion-slide>
-                    editors
+                    <ion-list can-swipe="true" show-delete="showDelete">
+
+                        <ion-item ng-repeat="editor in playlist.editors">
+                            <h2>{{ editor.username }}</h2>
+                            <ion-delete-button ng-if="!editor.is_admin_editor" ng-click="toggleEditor(editor)"
+                                               ng-class="{'ion-android-lock': editor.is_blocked_editor, 'ion-android-unlock': !editor.is_blocked_editor}">
+                            </ion-delete-button>
+                        </ion-item>
+
+                    </ion-list>
                 </ion-slide>
             </ion-slide-box>
 

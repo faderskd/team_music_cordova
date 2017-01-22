@@ -34,7 +34,20 @@ angular.module("teamMusic")
             );
         };
 
-        $scope.deletePlaylist = function (playlist) {
+        $scope.showConfirmPlaylistDeletion = function (playlist) {
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Are you sure you want to delete playlist ' + playlist.title + ' ?',
+                template: ''
+            });
+
+            confirmPopup.then(function (res) {
+                if (res) {
+                    deletePlaylist(playlist);
+                }
+            });
+        };
+
+        function deletePlaylist(playlist) {
             for (var i = 0; i < $scope.playlists.length; i++) {
                 if ($scope.playlists[i].id == playlist.id) {
 
@@ -48,7 +61,7 @@ angular.module("teamMusic")
                     return;
                 }
             }
-        };
+        }
 
         // joining to playlists functions
         $scope.assignPlaylistToJoin = function (playlist) {
@@ -68,7 +81,7 @@ angular.module("teamMusic")
             });
         };
 
-        $scope.showPopup = function () {
+        $scope.showJoinPopup = function () {
 
             var joinPopup = $ionicPopup.show({
                 templateUrl: 'templates/logged/joinPlaylistForm.html',

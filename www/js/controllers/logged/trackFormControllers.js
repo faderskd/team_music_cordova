@@ -2,13 +2,14 @@ angular.module("teamMusic")
     .controller("createTrackFormController", function ($scope, $state, $ionicPopup, ApiUrls, multipartForm) {
 
         $scope.errors = {};
+        $scope.newTrack = {};
 
-        $scope.saveTrackForm = function (newTrack) {
+        $scope.saveTrackForm = function () {
             if ($scope.trackForm.$valid) {
                 multipartForm.send(
                     ApiUrls.tracksUrl,
                     "POST",
-                    newTrack
+                    $scope.newTrack
                 ).then(
                     function successCallback(response) {
                         $ionicPopup.alert({
@@ -34,30 +35,14 @@ angular.module("teamMusic")
 
         var trackId = $stateParams.trackId;
         $scope.errors = {};
+        $scope.track = {};
 
-        $http({
-            method: 'GET',
-            url: ApiUrls.tracksUrl + trackId + '/'
-        }).then(
-            function successCallback(response) {
-                $scope.track = response.data;
-
-                var trackFileUrl = $scope.track.file_url;
-                var splittedTrackFileUrl = trackFileUrl.split('/');
-
-                $scope.savedFile = splittedTrackFileUrl[splittedTrackFileUrl.length - 1];
-            },
-            function errorCallback(response) {
-            }
-        );
-
-
-        $scope.saveTrackForm = function (track) {
+        $scope.saveTrackForm = function () {
             if ($scope.trackForm.$valid) {
                 multipartForm.send(
                     ApiUrls.tracksUrl + trackId + '/',
                     "PUT",
-                    track
+                    $scope.track
                 ).then(
                     function successCallback(response) {
                         $ionicPopup.alert({
@@ -75,7 +60,24 @@ angular.module("teamMusic")
                 );
             }
             $scope.trackForm.submitted = true;
-        }
+        };
+
+        $http({
+            method: 'GET',
+            url: ApiUrls.tracksUrl + trackId + '/'
+        }).then(
+            function successCallback(response) {
+                $scope.track = response.data;
+
+                var trackFileUrl = $scope.track.file_url;
+                var splittedTrackFileUrl = trackFileUrl.split('/');
+
+                $scope.savedFile = splittedTrackFileUrl[splittedTrackFileUrl.length - 1];
+            },
+            function errorCallback(response) {
+            }
+        );
+
     })
     .directive('onChangeUpdateName', function () {
         return {

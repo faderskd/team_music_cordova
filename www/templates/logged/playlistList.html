@@ -10,10 +10,6 @@
         </div>
 
         <div class="buttons">
-            <!--- Show delete button --->
-            <button class="button button-icon icon ion-ios-minus-outline"
-                    ng-click="showDelete = !showDelete; showReorder = false"></button>
-
             <!--- Add playlist button --->
             <button class="button button-icon icon ion-ios-plus-outline"
                     ui-sref="logged.create-playlist"></button>
@@ -39,16 +35,17 @@
                 <h2>{{playlist.title}}</h2>
 
                 <ion-option-button ng-if="!playlist.is_editor" class="button-balanced"
-                                   ng-click="showPopup();assignPlaylistToJoin(playlist)">
+                                   ng-click="showJoinPopup();assignPlaylistToJoin(playlist)">
                     Join
                 </ion-option-button>
                 <ion-option-button ng-if="playlist.is_editor" class="button-balanced"
                                    ui-sref="logged.edit-playlist({playlistId: {{playlist.id}} })">
                     Edit
                 </ion-option-button>
-                <ion-delete-button ng-if="playlist.is_admin_editor" class="ion-minus-circled"
-                                   ng-click="deletePlaylist(playlist)">
-                </ion-delete-button>
+                <ion-option-button ng-if="playlist.is_admin_editor" class="button-assertive"
+                                   ng-click="showConfirmPlaylistDeletion(playlist)">
+                    Delete
+                </ion-option-button>
             </ion-item>
 
         </ion-list>
