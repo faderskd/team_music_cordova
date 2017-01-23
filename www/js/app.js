@@ -7,8 +7,6 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule', 'ionic
 
     .run(function ($ionicPlatform, $rootScope, $state, Account) {
 
-        Account.loadUserFromCookie();
-
         $ionicPlatform.ready(function () {
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -22,6 +20,14 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule', 'ionic
             }
             if (window.StatusBar) {
                 StatusBar.styleDefault();
+            }
+
+            var user = Account.loadUserFromCookie();
+            if (user) {
+                $state.go('logged.track-list');
+            }
+            else {
+                $state.go('no-logged.login');
             }
 
             $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {

@@ -14,6 +14,7 @@ angular.module("teamMusic")
                 return null;
             },
             clearStorage: function () {
+                user = {};
                 localStorageService.clearAll();
             },
 
