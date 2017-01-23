@@ -35,12 +35,19 @@
                 <h2>{{playlist.title}}</h2>
 
                 <ion-option-button ng-if="!playlist.is_editor" class="button-balanced"
+                                   ng-disabled="playlist.is_blocked_editor"
                                    ng-click="showJoinPopup();assignPlaylistToJoin(playlist)">
                     Join
                 </ion-option-button>
-                <ion-option-button ng-if="playlist.is_editor" class="button-balanced"
+                <ion-option-button ng-if="playlist.is_editor"
+                                   ng-click="" class="button-balanced"
                                    ui-sref="logged.edit-playlist({playlistId: {{playlist.id}} })">
                     Edit
+                </ion-option-button>
+                <ion-option-button ng-if="playlist.is_editor && !playlist.is_admin_editor"
+                                   ng-click="showConfirmPlaylistLeave(playlist)"
+                                   class="button-energized">
+                    Leave
                 </ion-option-button>
                 <ion-option-button ng-if="playlist.is_admin_editor" class="button-assertive"
                                    ng-click="showConfirmPlaylistDeletion(playlist)">

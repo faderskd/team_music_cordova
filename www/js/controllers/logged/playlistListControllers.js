@@ -34,6 +34,7 @@ angular.module("teamMusic")
             );
         };
 
+        // deleting playlist
         $scope.showConfirmPlaylistDeletion = function (playlist) {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Are you sure you want to delete playlist ' + playlist.title + ' ?',
@@ -63,22 +64,10 @@ angular.module("teamMusic")
             }
         }
 
-        // joining to playlists functions
+        // joining to playlists
         $scope.assignPlaylistToJoin = function (playlist) {
             $scope.idOfPlaylistAssignedToJoin = playlist.id;
             $scope.nameOfPlaylistAssignedToJoin = playlist.title;
-        };
-
-        var saveJoinToPlaylistForm = function (password, joinPopup) {
-            $http({
-                method: 'POST',
-                data: {password: password},
-                url: ApiUrls.playlistUrl + $scope.idOfPlaylistAssignedToJoin + '/join/'
-            }).then(function successCallback(response) {
-                joinPopup.close();
-            }, function errorCallback(response) {
-                $scope.errors = response.data;
-            });
         };
 
         $scope.showJoinPopup = function () {
@@ -113,4 +102,50 @@ angular.module("teamMusic")
             };
 
         };
-    });
+
+        function saveJoinToPlaylistForm(password, joinPopup) {
+            $http({
+                method: 'POST',
+                data: {password: password},
+                url: ApiUrls.playlistUrl + $scope.idOfPlaylistAssignedToJoin + '/join/'
+            }).then(function successCallback(response) {
+                joinPopup.close();
+                $state.go('logged.edit-playlist', {'playlistId': $scope.idOfPlaylistAssignedToJoin}, {reload: true});
+            }, function errorCallback(response) {
+                $scope.errors = response.data;
+            });
+        }
+
+        // leaving playlist
+        $scope.showConfirmPlaylistLeave = function (playlist) {
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Are you sure you want to leave playlist ' + playlist.title + ' ?',
+                template: ''
+            });
+
+            confirmPopup.then(function (res) {
+                if (res) {
+                    leavePlaylist(playlist);
+                }
+            });
+        };
+
+        function leavePlaylist(playlist) {
+            for (var i = 0; i < $scope.playlists.length; i++) {
+                if ($scope.playlists[i].id == playlist.id) {
+
+                    $http({
+                        method: "POST",
+                        url: ApiUrls.playlistUrl + playlist.id + '/leave/'
+                    }).then(
+                        function successCallback(response) {
+                            $scope.playlists.splice(i, 1);
+                        },
+                        function errorCallback(response) {
+                        });
+                    return;
+                }
+            }
+        }
+    }
+);

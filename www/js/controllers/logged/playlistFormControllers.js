@@ -81,19 +81,6 @@ angular.module('teamMusic')
             $scope.playlistForm.submitted = true;
         };
 
-        $scope.leavePlaylist = function () {
-            $http({
-                method: "POST",
-                url: ApiUrls.playlistUrl + $scope.playlist.id + '/leave/'
-            }).then(
-                function successCallback(response) {
-                    $location.path('/playlists');
-                },
-                function errorCallback(response) {
-                }
-            )
-        };
-
         $scope.toggleEditor = function (editor) {
             if (!editor.is_blocked_editor) {
                 $http({
