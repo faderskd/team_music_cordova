@@ -56,7 +56,6 @@ angular.module("teamMusic")
         }
 
         // fetching track list from server
-        $scope.show();
         $http({
             method: 'GET',
             url: ApiUrls.tracksUrl
@@ -65,8 +64,5 @@ angular.module("teamMusic")
                 $scope.tracksCopy = response.data;
             }, function errorsCallback(response) {
             }
-        ).finally(function () {
-                $scope.hide();
-            });
-
+        )
     });

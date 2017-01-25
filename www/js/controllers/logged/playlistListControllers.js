@@ -137,7 +137,6 @@ angular.module("teamMusic")
         }
 
         // fetching playlist from server
-        $scope.show();
         $http({
             method: 'GET',
             url: ApiUrls.playlistUrl
@@ -145,9 +144,7 @@ angular.module("teamMusic")
                 $scope.playlists = response.data;
             }, function errorsCallback(response) {
             }
-        ).finally(function () {
-                $scope.hide();
-            });
+        )
 
     }
 );

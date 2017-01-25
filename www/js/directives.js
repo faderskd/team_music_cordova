@@ -16,4 +16,13 @@ angular.module('teamMusic')
                 });
             }
         }
+    })
+    .directive('audioFooter', function (MediaManager) {
+        return {
+            restrict: 'E',
+            templateUrl: 'templates/logged/audioFooter.html',
+            link: function (scope, element, attrs) {
+
+            }
+        }
     });

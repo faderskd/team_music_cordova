@@ -110,11 +110,12 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule', 'ionic
 
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
-            'http://127.0.0.1:8000/**'
+            'http://192.168.10.159:8000/**'
         ]);
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         $httpProvider.interceptors.push("authorizationInterceptor");
         $httpProvider.interceptors.push("unauthorizedInterceptor");
+        $httpProvider.interceptors.push("httpMiscInterceptor");
     })
     .controller("teamMusicController", function ($rootScope, $scope, $ionicLoading) {
 

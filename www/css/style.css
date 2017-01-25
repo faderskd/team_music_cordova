@@ -71,6 +71,16 @@ input[type="file"] {
     left: 2px;
 }
 
+.global-player-spinner {
+    position: relative;
+    bottom: 16px;
+    left: 8px;
+}
+
+.global-player-spinner svg {
+    stroke: #ffa500;
+}
+
 /* inside ionic audio */
 .ion-audio-track-info {
     position: relative;
