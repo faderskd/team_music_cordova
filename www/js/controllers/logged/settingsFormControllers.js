@@ -1,5 +1,6 @@
 angular.module('teamMusic')
     .controller('settingsFormController', function ($scope, $http, $state, $ionicPopup, ApiUrls, Account) {
+
         var currentUser = Account.getUser();
         $scope.user = {
             username: currentUser.username,

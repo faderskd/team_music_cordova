@@ -1,0 +1,40 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">Add tracks to playlist</h1>
+        <button ng-click="closeModal()" class="button button-clear button-primary">Cancel</button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list list-inset">
+            <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" placeholder="Search" ng-model="modalData.searchTrackTitle"
+                       ng-change="searchTracks(modalData.searchTrackTitle)"
+                       ng-model-options="{debounce:500}">
+            </label>
+        </div>
+        <div class="list">
+
+            <ion-list>
+
+                <ion-item class="item item-thumbnail-left" ng-repeat="track in modalData.searchedTracks">
+                    <img ng-src="{{track.image_url}}">
+
+
+                    <h2>{{track.title}}</h2>
+
+                    <ion-audio-track track="track">
+                        <ion-audio-controls>
+                            <a class="button button-icon icon" ion-audio-play></a>
+                            <ion-spinner style="position: relative;top:8px;"></ion-spinner>
+                        </ion-audio-controls>
+                    </ion-audio-track>
+                </ion-item>
+
+            </ion-list>
+        </div>
+    </ion-content>
+    <ion-footer-bar align-title="left" class="bar bar-positive">
+        <ion-audio-progress-bar track="tracks[0]" display-time></ion-audio-progress-bar>
+    </ion-footer-bar>
+</ion-modal-view>
+

@@ -1,8 +1,8 @@
 <ion-view view-title="Edit playlist">
     <form name="playlistForm" on-change-clear-server-error enctype="multipart/form-data" novalidate>
 
-        <!-- Track in playlist editing header -->
-        <ion-header-bar class="bar bar-positive">
+        <!-- Actions header -->
+        <ion-header-bar class="bar bar-header bar-positive">
             <!--- Menu button --->
             <div class="buttons">
                 <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
@@ -17,7 +17,7 @@
 
                 <!--- Add track button --->
                 <button ng-disabled="activeIndex != 0" class="button button-icon icon ion-ios-plus-outline"
-                        ui-sref="logged.create-track"></button>
+                        ng-click="openModal()"></button>
             </div>
             <h1 class="title">Edit playlist</h1>
             <!--- Show reorder button --->
@@ -38,9 +38,6 @@
 
 
         <ion-content ng-class="{'has-footer': activeIndex==0}">
-            <!---- Header messages ---->
-            <div ng-include="'templates/common/headerMessages.html'"></div>
-
             <ion-slide-box on-slide-changed="onSlideChangeStart(index)" show-pager="false" active-slide="0">
                 <!-- Tracks in playlist list -->
                 <ion-slide>
@@ -142,7 +139,7 @@
         </ion-content>
 
         <ion-footer-bar align-title="left" class="bar bar-positive" ng-if="activeIndex==0">
-            <h2>player</h2>
+            <ion-audio-progress-bar track="tracks[0]" display-time></ion-audio-progress-bar>
         </ion-footer-bar>
 
     </form>

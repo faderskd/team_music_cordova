@@ -3,26 +3,14 @@ angular.module("teamMusic")
                                                     $templateCache, ApiUrls) {
 
 
-        // joining to playlists variables
+        // joining to playlist variables
         $scope.idOfPlaylistAssignedToJoin = -1;
         $scope.nameOfPlaylistAssignedToJoin = '';
         $scope.errors = {};
         $scope.data = {};
 
-        $scope.show();
-        $http({
-            method: 'GET',
-            url: ApiUrls.playlistUrl
-        }).then(function successCallback(response) {
-                $scope.playlists = response.data;
-            }, function errorsCallback(response) {
-            }
-        ).finally(function () {
-                $scope.hide();
-            });
 
-
-        // searching by title
+        // searching playlist by title
         $scope.searchPlaylists = function (title) {
             $http({
                 method: 'GET',
@@ -64,7 +52,7 @@ angular.module("teamMusic")
             }
         }
 
-        // joining to playlists
+        // joining to playlist
         $scope.assignPlaylistToJoin = function (playlist) {
             $scope.idOfPlaylistAssignedToJoin = playlist.id;
             $scope.nameOfPlaylistAssignedToJoin = playlist.title;
@@ -147,5 +135,19 @@ angular.module("teamMusic")
                 }
             }
         }
+
+        // fetching playlist from server
+        $scope.show();
+        $http({
+            method: 'GET',
+            url: ApiUrls.playlistUrl
+        }).then(function successCallback(response) {
+                $scope.playlists = response.data;
+            }, function errorsCallback(response) {
+            }
+        ).finally(function () {
+                $scope.hide();
+            });
+
     }
 );

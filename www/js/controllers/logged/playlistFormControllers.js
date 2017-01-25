@@ -29,7 +29,7 @@ angular.module('teamMusic')
         }
 
     }).
-    controller("editPlaylistFormController", function ($scope, $http, $state, $stateParams, $ionicPopup,
+    controller("editPlaylistFormController", function ($scope, $http, $state, $stateParams, $ionicPopup, $ionicModal,
                                                        $ionicSlideBoxDelegate, ApiUrls, Permissions, Account) {
 
         var playlistId = $stateParams.playlistId;
@@ -38,15 +38,20 @@ angular.module('teamMusic')
         $scope.playlist = {};
         $scope.activeIndex = 0;
         $scope.showReorder = false;
-        $scope.searchedTracks = [];
-        $scope.tracksCopy = [];
+        $scope.modalData = {
+            searchedTracks: [],
+            searchTrackTitle: '',
+            tracksCopy: []
+        };
 
+        // reordering tracks in playlist
         $scope.moveItem = function (track, fromIndex, toIndex) {
             //Move the item in the array
             var track = $scope.playlist.tracks.splice(fromIndex, 1);
             $scope.playlist.tracks.splice(toIndex, 0, track[0]);
         };
 
+        // slides management
         $scope.onSlideChangeStart = function (index) {
             $scope.activeIndex = index;
         };
@@ -59,6 +64,7 @@ angular.module('teamMusic')
             $ionicSlideBoxDelegate.previous();
         };
 
+        // editing playlist settings
         $scope.savePlaylistForm = function () {
             if ($scope.playlistForm.$valid) {
                 $http({
@@ -68,7 +74,7 @@ angular.module('teamMusic')
                 }).then(
                     function successCallback(response) {
                         $ionicPopup.alert({
-                            title: 'Playlist added successfully!',
+                            title: 'Playlist updated successfully!',
                             template: ''
                         });
                     },
@@ -81,6 +87,7 @@ angular.module('teamMusic')
             $scope.playlistForm.submitted = true;
         };
 
+        // blocking/unblocking editors
         $scope.toggleEditor = function (editor) {
             if (!editor.is_blocked_editor) {
                 $http({
@@ -106,38 +113,6 @@ angular.module('teamMusic')
                     }
                 )
             }
-        };
-
-        $scope.searchTracks = function (title) {
-            if (title.length > 2) {
-                $http({
-                    method: 'GET',
-                    url: ApiUrls.tracksUrl + '?title=' + title
-                }).then(function successCallback(response) {
-                        var searchedTracks = [];
-                        for (var i = 0; i < response.data.length; i++) {
-                            searchedTracks.push(response.data[i]);
-                            for (var j = 0; j < $scope.playlist.tracks.length; j++) {
-                                if ($scope.playlist.tracks[j].id == response.data[i].id) {
-                                    searchedTracks[i].trackInPlaylist = true;
-                                    break;
-                                }
-                                searchedTracks[i].trackInPlaylist = false;
-                            }
-                        }
-                        $scope.searchedTracks = searchedTracks;
-                        $scope.tracksCopy = searchedTracks;
-                    }, function errorsCallback(response) {
-                    }
-                );
-            }
-            else {
-                $scope.searchedTracks = $scope.tracksCopy;
-            }
-        };
-
-        $scope.clearSearchedTracks = function () {
-            $scope.searchedTracks = [];
         };
 
         $scope.addTrackToPlaylist = function (track) {
@@ -169,6 +144,57 @@ angular.module('teamMusic')
             )
         };
 
+        // searching tracks for adding to playlist
+        $scope.searchTracks = function (title) {
+            if (title.length > 2) {
+                $http({
+                    method: 'GET',
+                    url: ApiUrls.tracksUrl + '?title=' + title
+                }).then(function successCallback(response) {
+                        var searchedTracks = [];
+                        for (var i = 0; i < response.data.length; i++) {
+                            searchedTracks.push(response.data[i]);
+                            for (var j = 0; j < $scope.playlist.tracks.length; j++) {
+                                if ($scope.playlist.tracks[j].id == response.data[i].id) {
+                                    searchedTracks[i].trackInPlaylist = true;
+                                    break;
+                                }
+                                searchedTracks[i].trackInPlaylist = false;
+                            }
+                        }
+                        $scope.modalData.searchedTracks = searchedTracks;
+                        $scope.modalData.tracksCopy = searchedTracks;
+                    }, function errorsCallback(response) {
+                    }
+                );
+            }
+            else {
+                $scope.searchedTracks = $scope.tracksCopy;
+            }
+        };
+
+        // adding to playlist modal management
+        $ionicModal.fromTemplateUrl('templates/logged/addTrackToPlaylistModal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.addTrackToPlaylistModal = modal;
+        });
+
+        $scope.openModal = function () {
+            $scope.addTrackToPlaylistModal.show();
+        };
+
+        $scope.closeModal = function () {
+            $scope.addTrackToPlaylistModal.hide();
+        };
+
+        $scope.$on('$destroy', function () {
+            $scope.addTrackToPlaylistModal.remove();
+        });
+
+
+        // fetching playlist from server
         $http({
             method: 'GET',
             url: ApiUrls.playlistUrl + playlistId + '/'
@@ -187,6 +213,8 @@ angular.module('teamMusic')
                 else
                     $scope.numberOfSlides = 2;
 
+                // because of async nature of http service update slides based on permissions received from server
+                // together with playlist data
                 $ionicSlideBoxDelegate.update();
             },
             function errorCallback(response) {

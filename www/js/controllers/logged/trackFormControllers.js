@@ -62,6 +62,7 @@ angular.module("teamMusic")
             $scope.trackForm.submitted = true;
         };
 
+        // fetching track from server
         $http({
             method: 'GET',
             url: ApiUrls.tracksUrl + trackId + '/'

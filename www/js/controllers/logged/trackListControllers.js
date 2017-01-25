@@ -1,19 +1,6 @@
 angular.module("teamMusic")
     .controller("trackListController", function ($scope, $http, $state, $stateParams, $ionicPopup, Account, ApiUrls, Permissions) {
 
-        $scope.show();
-        $http({
-            method: 'GET',
-            url: ApiUrls.tracksUrl
-        }).then(function successCallback(response) {
-                $scope.tracks = response.data;
-                $scope.tracksCopy = response.data;
-            }, function errorsCallback(response) {
-            }
-        ).finally(function () {
-                $scope.hide();
-            });
-
         $scope.searchTracks = function (title) {
             if (title.length > 2) {
                 $scope.show();
@@ -67,5 +54,19 @@ angular.module("teamMusic")
                 }
             }
         }
+
+        // fetching track list from server
+        $scope.show();
+        $http({
+            method: 'GET',
+            url: ApiUrls.tracksUrl
+        }).then(function successCallback(response) {
+                $scope.tracks = response.data;
+                $scope.tracksCopy = response.data;
+            }, function errorsCallback(response) {
+            }
+        ).finally(function () {
+                $scope.hide();
+            });
 
     });
