@@ -20,20 +20,28 @@
                         ng-click="openModal()"></button>
             </div>
             <h1 class="title">Edit playlist</h1>
-            <!--- Show reorder button --->
-            <button ng-disabled="activeIndex != 0" class="button"
-                    ng-click="showDelete = false; showReorder = !showReorder">
-                Reorder
-            </button>
+
+            <div class="buttons">
+                <!--- Show reorder button --->
+                <button ng-disabled="activeIndex != 0" class="button button-icon icon ion-shuffle"
+                        ng-click="showDelete = false; showReorder = !showReorder">
+                </button>
+                <!--- Toggle global player button --->
+                <div ng-include="'templates/logged/audioToggleButton.html'">
+                </div>
+
+            </div>
 
         </ion-header-bar>
 
         <ion-header-bar class="bar bar-subheader item-input-inset">
-            <i ng-class="{disabled: activeIndex < 1}" ng-click="leftSlide()"
-               class="icon ion-arrow-left-c pointer larger"></i>
-            <pre>  </pre>
-            <i ng-class="{disabled: activeIndex >= numberOfSlides - 1}"
-               ng-click="rightSlide()" class="icon ion-arrow-right-c pointer larger"></i>
+            <div class="row">
+                <i ng-class="{disabled: activeIndex < 1}" ng-click="leftSlide()"
+                   class="col col-10 icon ion-arrow-left-c pointer larger"></i>
+                <i ng-class="{disabled: activeIndex >= numberOfSlides - 1}" ng-click="rightSlide()"
+                   class="col col-10 icon ion-arrow-right-c pointer larger"></i>
+                <span class="col col-80 text-right">{{ slidesTitles[activeIndex] }}</span>
+            </div>
         </ion-header-bar>
 
 
@@ -138,9 +146,6 @@
 
         </ion-content>
 
-        <ion-footer-bar align-title="left" class="bar bar-positive" ng-if="activeIndex==0">
-            <ion-audio-progress-bar track="tracks[0]" display-time></ion-audio-progress-bar>
-        </ion-footer-bar>
 
     </form>
 </ion-view>

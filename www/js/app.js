@@ -116,14 +116,20 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule', 'ionic
         $httpProvider.interceptors.push("authorizationInterceptor");
         $httpProvider.interceptors.push("unauthorizedInterceptor");
     })
-    .controller("teamMusicController", function ($scope, $ionicLoading) {
-        $scope.show = function () {
+    .controller("teamMusicController", function ($rootScope, $scope, $ionicLoading) {
+
+        $rootScope.show = function () {
             $ionicLoading.show({
                 template: '<ion-spinner icon="lines"></ion-spinner>'
             });
         };
-        $scope.hide = function () {
+        $rootScope.hide = function () {
             $ionicLoading.hide();
+        };
+
+        $scope.globalPlayerHidden = false;
+        $scope.toggleGlobalPlayer = function () {
+            $scope.globalPlayerHidden = $scope.globalPlayerHidden ? false : true;
         }
 
     });

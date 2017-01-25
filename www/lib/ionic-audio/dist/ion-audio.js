@@ -348,8 +348,8 @@ function ionAudioProgressBar(MediaManager) {
             track: '=?'
         },
         template:
-            '<h2 class="ion-audio-track-info" ng-style="displayTrackInfo()">{{track.title}} - {{track.artist}}</h2>' +
-            '<div class="range">' +
+            '<small class="ion-audio-track-info" ng-style="displayTrackInfo()">{{track.title}}</small>' +
+            '<div class="range progress-bar-container">' +
             '<ion-audio-progress track="track"></ion-audio-progress>' +
             '<input type="range" name="volume" min="0" max="{{track.duration}}" ng-model="track.progress" on-release="sliderRelease()" disabled>' +
             '<ion-audio-duration track="track"></ion-audio-duration>' +
@@ -371,7 +371,7 @@ function ionAudioProgressBar(MediaManager) {
             element.find('ion-audio-duration').remove();
         }
         if (!angular.isDefined(attrs.displayInfo)) {
-            element.find('h2').remove();
+            element.find('small').remove();
         }
 
         if (angular.isUndefined(scope.track)) {
@@ -401,6 +401,7 @@ function ionAudioProgressBar(MediaManager) {
         };
 
         scope.$on('$destroy', function() {
+            console.log("sad");
             unbindStatusListener();
             if (angular.isDefined(unbindTrackListener)) {
                 unbindTrackListener();

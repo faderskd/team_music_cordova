@@ -1,5 +1,5 @@
 .error-container {
-  margin: 5px 0;
+    margin: 5px 0;
 }
 
 .error-container:last-child {
@@ -7,38 +7,38 @@
 }
 
 .error {
-  padding: 10px 16px;
-  font-family: "Arial Black", Gadget, sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  color: #555;
-  vertical-align: middle;
+    padding: 10px 16px;
+    font-family: "Arial Black", Gadget, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #555;
+    vertical-align: middle;
 }
 
 .error i {
-  font-size: 24px;
-  color: #B83E2C;
-  vertical-align: middle;
+    font-size: 24px;
+    color: #B83E2C;
+    vertical-align: middle;
 }
 
 .last-error-container > .error {
-  padding: 5px 16px 0;
+    padding: 5px 16px 0;
 }
 
 .head-error-container > .error {
-  text-align: center;
+    text-align: center;
 }
 
 .has-errors {
-  border-bottom: 3px solid #B83E2C;
+    border-bottom: 3px solid #B83E2C;
 }
 
 .no-errors {
-  border-bottom: 3px solid green;
+    border-bottom: 3px solid green;
 }
 
 .pointer {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 input[type="file"] {
@@ -58,5 +58,28 @@ input[type="file"] {
 }
 
 .disabled {
-  opacity: 0.3;
+    opacity: 0.3;
+}
+
+.audio-footer {
+    height: 52px;
+}
+
+.global-player-container > i {
+    position: relative;
+    bottom: 18px;
+    left: 2px;
+}
+
+/* inside ionic audio */
+.ion-audio-track-info {
+    position: relative;
+    bottom: 7px;
+    margin-left: 10px;
+}
+
+/* inside ionic audio */
+.progress-bar-container {
+    position: relative;
+    bottom: 22px;
 }

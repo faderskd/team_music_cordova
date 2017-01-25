@@ -43,6 +43,7 @@ angular.module('teamMusic')
             searchTrackTitle: '',
             tracksCopy: []
         };
+        $scope.slidesTitles = ["Tracks", "Basic settings", "Editors"];
 
         // reordering tracks in playlist
         $scope.moveItem = function (track, fromIndex, toIndex) {
@@ -210,8 +211,10 @@ angular.module('teamMusic')
 
                 if (isAdminEditor)
                     $scope.numberOfSlides = 3;
-                else
+                else {
                     $scope.numberOfSlides = 2;
+                    $scope.slidesTitles.splice(1, 1);
+                }
 
                 // because of async nature of http service update slides based on permissions received from server
                 // together with playlist data

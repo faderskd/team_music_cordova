@@ -1,6 +1,6 @@
 <ion-view view-title="Track list">
 
-    <!--- List header --->
+    <!--- Header bar --->
     <ion-header-bar class="bar-positive">
         <!--- Menu button --->
         <div class="buttons">
@@ -15,7 +15,33 @@
         </div>
         <h1 class="title">Track list</h1>
 
+        <!--- Toggle global player button --->
+        <div class="buttons">
+            <button class="button button-icon ion-music-note">
+            </button>
+        </div>
     </ion-header-bar>
+
+    <!--- Header bar --->
+    <ion-nav-bar class="bar bar-header bar-positive">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+            </button>
+            <!--- Add track button --->
+            <button class="button button-icon icon ion-ios-plus-outline"
+                    ui-sref="logged.create-track"></button>
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="right">
+            <!--- Toggle global player button --->
+            <div ng-include="'templates/logged/audioToggleButton.html'">
+            </div>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
 
     <ion-header-bar class="bar bar-subheader item-input-inset">
         <label class="item-input-wrapper textbox-search">
@@ -54,7 +80,5 @@
         </ion-list>
 
     </ion-content>
-    <ion-footer-bar align-title="left" class="bar bar-positive">
-        <ion-audio-progress-bar track="tracks[0]" display-time></ion-audio-progress-bar>
-    </ion-footer-bar>
+
 </ion-view>

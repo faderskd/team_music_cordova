@@ -1,8 +1,15 @@
 <ion-modal-view>
     <ion-header-bar class="bar bar-header bar-positive">
         <h1 class="title">Add tracks to playlist</h1>
-        <button ng-click="closeModal()" class="button button-clear button-primary">Cancel</button>
+
+        <div class="buttons">
+            <button ng-click="closeModal()" class="button button-icon icon ion-ios-arrow-down"></button>
+            <!--- Toggle global player button --->
+            <div ng-include="'templates/logged/audioToggleButton.html'">
+            </div>
+        </div>
     </ion-header-bar>
+
     <ion-content>
         <div class="list list-inset">
             <label class="item item-input">
@@ -33,8 +40,7 @@
             </ion-list>
         </div>
     </ion-content>
-    <ion-footer-bar align-title="left" class="bar bar-positive">
-        <ion-audio-progress-bar track="tracks[0]" display-time></ion-audio-progress-bar>
-    </ion-footer-bar>
+    <div ng-include="'templates/logged/audioFooter.html'"></div>
+
 </ion-modal-view>
 

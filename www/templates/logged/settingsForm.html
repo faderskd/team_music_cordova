@@ -2,14 +2,20 @@
 
     <form method="post" on-change-clear-server-error name="settingsForm" novalidate>
 
-        <!----- Common navbar --->
-        <ion-nav-bar class="bar-stable">
+        <!--- Header bar --->
+        <ion-nav-bar class="bar bar-header bar-positive">
             <ion-nav-back-button>
             </ion-nav-back-button>
 
             <ion-nav-buttons side="left">
                 <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
                 </button>
+            </ion-nav-buttons>
+
+            <ion-nav-buttons side="right">
+                <!--- Toggle global player button --->
+                <div ng-include="'templates/logged/audioToggleButton.html'">
+                </div>
             </ion-nav-buttons>
         </ion-nav-bar>
 

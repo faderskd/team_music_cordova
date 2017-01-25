@@ -1,5 +1,5 @@
 angular.module("teamMusic").
-    factory("unauthorizedInterceptor", function ($q, $injector) {
+    factory("unauthorizedInterceptor", function ($q, $injector, $rootScope) {
         return {
             responseError: function (response) {
                 if ([404, 401].indexOf(response.status) > 0) {
@@ -14,12 +14,12 @@ angular.module("teamMusic").
         }
     })
     .factory("authorizationInterceptor", function ($injector) {
-            return {
-                'request': function (config) {
-                    var Account = $injector.get("Account");
-                    var token = Account.getUser().token;
-                    config.headers['Authorization'] = token ? ('Token ' + token) : '';
-                    return config;
-                }
-            };
-        });
+        return {
+            'request': function (config) {
+                var Account = $injector.get("Account");
+                var token = Account.getUser().token;
+                config.headers['Authorization'] = token ? ('Token ' + token) : '';
+                return config;
+            }
+        };
+    })

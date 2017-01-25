@@ -1,22 +1,27 @@
 <ion-view view-title="Playlist list">
 
     <script type="text/ng-template" id="joinPlaylistForm.html" src="joinPlaylistForm.html"></script>
-    <!--- List header --->
-    <ion-header-bar class="bar-positive">
-        <!--- Menu button --->
-        <div class="buttons">
-            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-            </button>
-        </div>
 
-        <div class="buttons">
+    <!--- Header bar --->
+    <ion-nav-bar class="bar bar-header bar-positive">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+
             <!--- Add playlist button --->
             <button class="button button-icon icon ion-ios-plus-outline"
                     ui-sref="logged.create-playlist"></button>
-        </div>
-        <h1 class="title">Playlist list</h1>
+        </ion-nav-buttons>
 
-    </ion-header-bar>
+        <ion-nav-buttons side="right">
+            <!--- Toggle global player button --->
+            <div ng-include="'templates/logged/audioToggleButton.html'">
+            </div>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
 
     <ion-header-bar class="bar bar-subheader item-input-inset">
         <label class="item-input-wrapper textbox-search">
