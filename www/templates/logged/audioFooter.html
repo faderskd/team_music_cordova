@@ -1,9 +1,9 @@
 <ion-footer-bar align-title="left" class="bar" ng-class="{'bar-positive  audio-footer': !globalPlayerHidden}">
 
-    <div ng-hide="globalPlayerHidden" class="global-player-container">
+    <div class="global-player-container">
 
         <i style="display: inline-block;" class="icon ion-play larger"></i>
-        <ion-spinner class="global-player-spinner"></ion-spinner>
+        <ion-spinner ng-show="trackPlaying" class="global-player-spinner"></ion-spinner>
 
         <ion-audio-progress-bar style="display: inline-block;" display-time display-info>
         </ion-audio-progress-bar>

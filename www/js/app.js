@@ -31,6 +31,9 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule', 'ionic
             }
 
             $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
+                var toStateParent = toState.name.split('.')[0];
+                if (Account.loadUserFromCookie() && toStateParent == 'no-logged')
+                    e.preventDefault();
             });
 
         });
@@ -110,7 +113,7 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule', 'ionic
 
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
-            'http://192.168.10.159:8000/**'
+            'http://192.168.1.15:8000/**'
         ]);
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         $httpProvider.interceptors.push("authorizationInterceptor");
@@ -127,10 +130,5 @@ angular.module('teamMusic', ['ionic', 'ngMessages', 'LocalStorageModule', 'ionic
         $rootScope.hide = function () {
             $ionicLoading.hide();
         };
-
-        $scope.globalPlayerHidden = false;
-        $scope.toggleGlobalPlayer = function () {
-            $scope.globalPlayerHidden = $scope.globalPlayerHidden ? false : true;
-        }
 
     });

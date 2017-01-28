@@ -317,13 +317,13 @@ function ionAudioTrack(MediaManager, $rootScope) {
 
         var unbindWatcher = $scope.$watch('track', function(newTrack, oldTrack) {
             if (newTrack === undefined) return;
-            MediaManager.stop();
+            //MediaManager.stop();
             init(newTrack, oldTrack);
         });
 
         $scope.$on('$destroy', function() {
             unbindWatcher();
-            MediaManager.destroy();
+            //MediaManager.destroy();
         });
     }
 }

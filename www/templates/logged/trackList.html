@@ -14,12 +14,6 @@
                     ui-sref="logged.create-track"></button>
         </div>
         <h1 class="title">Track list</h1>
-
-        <!--- Toggle global player button --->
-        <div class="buttons">
-            <button class="button button-icon ion-music-note">
-            </button>
-        </div>
     </ion-header-bar>
 
     <!--- Header bar --->
@@ -64,7 +58,6 @@
                 <ion-audio-track track="track">
                     <ion-audio-controls>
                         <a class="button button-icon icon" ion-audio-play></a>
-                        <!--<ion-spinner style="position: relative;top:8px;"></ion-spinner>-->
                     </ion-audio-controls>
                 </ion-audio-track>
                 <ion-option-button ng-if="isTrackOwner(track)" class="button-balanced"

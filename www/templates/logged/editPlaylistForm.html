@@ -1,4 +1,4 @@
-<ion-view view-title="Edit playlist">
+<ion-view view-title="Edit playli">
     <form name="playlistForm" on-change-clear-server-error enctype="multipart/form-data" novalidate>
 
         <!-- Actions header -->
@@ -26,9 +26,6 @@
                 <button ng-disabled="activeIndex != 0" class="button button-icon icon ion-shuffle"
                         ng-click="showDelete = false; showReorder = !showReorder">
                 </button>
-                <!--- Toggle global player button --->
-                <div ng-include="'templates/logged/audioToggleButton.html'">
-                </div>
 
             </div>
 
@@ -64,7 +61,7 @@
                                 </ion-audio-controls>
                             </ion-audio-track>
 
-                            <ion-delete-button class="ion-minus-circled">
+                            <ion-delete-button class="ion-minus-circled" ng-click="removeTrackFromPlaylist(track)">
                             </ion-delete-button>
 
                             <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)">
